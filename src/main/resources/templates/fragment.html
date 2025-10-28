@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Навигация</title>
+  <style>
+    .header {
+        background: linear-gradient(135deg, #2c3e50, #3498db);
+        padding: 15px 20px;
+        display: flex;
+        justify-content: flex-end;
+        gap: 15px;
+        align-items: center;
+    }
+
+    .logout-btn {
+        background: #e74c3c;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .logout-btn:hover {
+        background: #c0392b;
+    }
+
+    .locale-select {
+        padding: 8px;
+        border-radius: 4px;
+        border: 1px solid #ddd;
+    }
+  </style>
+</head>
+<body>
+<!-- Основной хедер -->
+<div th:fragment="header">
+  <div class="header">
+    <!-- Переключение языка -->
+    <div th:insert="~{fragment :: locale}"></div>
+
+    <!-- Кнопка выхода -->
+    <form th:action="@{/logout}" method="post">
+      <button type="submit" class="logout-btn">Выйти</button>
+    </form>
+  </div>
+</div>
+
+<!-- Фрагмент переключения языка -->
+<div th:fragment="locale">
+  <form action="" method="get">
+    <select name="lang" onchange="this.form.submit()" class="locale-select">
+      <option value="">Язык</option>
+      <option value="en">EN</option>
+      <option value="ru">RU</option>
+    </select>
+  </form>
+</div>
+</body>
+</html>
