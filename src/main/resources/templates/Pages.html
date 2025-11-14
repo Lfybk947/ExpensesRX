@@ -200,3 +200,165 @@
 </div>
 </body>
 </html>
+
+
+
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Expenses</title>
+  <link rel="stylesheet" href="/static/css/index_expenses.css"/>
+
+</head>
+<body>
+<div class="left-block">
+  <div th:insert="~{fragment :: header}"></div>
+
+  <form th:action="@{/expenses/upload}" th:object="${fileUpload}" method="post" enctype="multipart/form-data">
+    <input type="file" name="file" th:field="*{multipartFile}">
+    <button type="submit" value="Upload">Upload</button>
+
+    <div th:if="${fileExpensesUpload != null}" class="message">
+      <p th:text="${fileExpensesUpload}">Message</p>
+    </div>
+    <div th:if="${errorFile != null}" class="error">
+      <p th:text="${errorFile}">Errors</p>
+    </div>
+  </form>
+
+  <form th:action="@{/expenses/filter}" method="post" th:object="${expensesSessionFilter}">
+
+    <div class="form-group">
+      <label>fromDate</label>
+      <input type="datetime-local" th:field="*{fromDate}">
+      <div th:if="${#fields.hasErrors('fromDate')}" class="error">
+        <span th:each="err : ${#fields.errors('fromDate')}" th:text="${err}"></span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>toDate</label>
+      <input type="datetime-local" th:field="*{toDate}">
+      <div th:if="${#fields.hasErrors('toDate')}" class="error">
+        <span th:each="err : ${#fields.errors('toDate')}" th:text="${err}"></span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>fromSum</label>
+      <input type="number" th:field="*{fromSum}">
+      <div th:if="${#fields.hasErrors('fromSum')}" class="error">
+        <span th:each="err : ${#fields.errors('fromSum')}" th:text="${err}"></span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>toSum</label>
+      <input type="number" th:field="*{toSum}">
+      <div th:if="${#fields.hasErrors('toSum')}" class="error">
+        <span th:each="err : ${#fields.errors('toSum')}" th:text="${err}"></span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>CurrencyOperations:</label>
+      <div class="h-list">
+        <div th:each="curOper : ${selectedCurrencyOperations}" class="h-item">
+          <label>
+            <input type="checkbox"
+                   th:value="${curOper.id}"
+                   th:field="*{currencyOperations}">
+            <span th:text="${curOper.name}"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="form-group">
+      <label>Categories:</label>
+      <div class="h-list">
+        <div th:each="cat : ${selectedCategories}" class="h-item">
+          <label>
+            <input type="checkbox"
+                   th:value="${cat.id}"
+                   th:field="*{categories}">
+            <span th:text="${cat.name}"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="form-group">
+      <label>Descriptions:</label>
+      <div class="h-list">
+        <div th:each="desc : ${selectedDescriptions}" class="h-item">
+          <label>
+            <input type="checkbox"
+                   th:value="${desc.id}"
+                   th:field="*{descriptions}">
+            <span th:text="${desc.name}"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="form-group">
+      <label>Users:</label>
+      <div class="h-list">
+        <div th:each="user : ${selectedUsers}" class="h-item">
+          <label>
+            <input type="checkbox"
+                   th:value="${user.id}"
+                   th:field="*{users}">
+            <span th:text="${user.username}"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+    <button onclick="selectAll(this)">Select all</button>
+    <button type="submit">Filter</button>
+    <button type="submit" formaction="/expenses/filter/reset">Clear filter</button>
+  </form>
+
+  <div th:if="${errors}">
+    <p style="color: red" th:each="error : ${errors}" th:text="${error.defaultMessage}">Message</p>
+  </div>
+
+</div>
+
+
+<div class="th, td">
+  <div class="right-content">
+    <div class="table" th:if="${expensesi != null}">
+      <h3>Expenses</h3>
+      <table>
+        <thead>
+        <tr>
+          <th>id</th>
+          <th th:each="column : ${columnsExpenses}" th:text="${column.name}">date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="expenses : ${expensesi}">
+          <td th:text="${expenses.id}">id</td>
+          <td th:text="${expenses.date}">date</td>
+          <td th:text="${expenses.sum}">sum</td>
+          <td th:text="${expenses.currencyOperations.name}">currency operations</td>
+          <td th:text="${expenses.categories.name}">categories</td>
+          <td th:text="${expenses.descriptions.name}">descriptions</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script src="/static/js/script_expenses.js"></script>
+
+</body>
+</html>

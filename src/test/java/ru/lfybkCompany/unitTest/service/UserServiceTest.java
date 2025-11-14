@@ -40,56 +40,65 @@ public class UserServiceTest {
     private UserUpdateEditMapper userUpdateEditMapper;
 
     private static final Long USER_ID = 1L;
-    private static final String USERNAME = "czare2015@yandex.ru";
 
     @InjectMocks
     private UserService userService;
 
-    private User createUser() {
-        return new User(1L, "1", "2", "1@2.com",
-                LocalDate.parse("1999-12-12"), "123", Role.ADMIN, Gender.FEMALE);
-    }
-
-    private UserReadDto createUserReadDto() {
-        return new UserReadDto(1L, "1", "2", "1@2.com",
-                LocalDate.parse("1999-12-12"), Role.ADMIN, Gender.FEMALE);
-    }
+    UserFilter userFilter = new UserFilter("Danil",
+            "Tsaregorodtsev",
+            LocalDate.parse("2001-07-21"),
+            "czare2015@yandex.ru",
+            Role.ADMIN,
+            Gender.MALE);
+    List<User> users = List.of(new User(1L, "Danil",
+            "Tsaregorodtsev",
+            "czare2015@yandex.ru",
+            LocalDate.parse("2001-07-21"),
+            "{noop}123",
+            Role.ADMIN,
+            Gender.MALE));
+    UserReadDto userReadDto = new UserReadDto(1L, "Danil",
+            "Tsaregorodtsev",
+            "czare2015@yandex.ru",
+            LocalDate.parse("2001-07-21"),
+            Role.ADMIN,
+            Gender.MALE);
+    UserCreateEditDto userCreateEditDto = new UserCreateEditDto(
+            "Danil",
+            "Tsaregorodtsev",
+            "czare2015@yandex.ru",
+            LocalDate.parse("2001-07-21"),
+            "{noop}123",
+            Role.ADMIN,
+            Gender.MALE);
+    User user = new User(1L, "Danil",
+            "Tsaregorodtsev",
+            "czare2015@yandex.ru",
+            LocalDate.parse("2001-07-21"),
+            "{noop}123",
+            Role.ADMIN,
+            Gender.MALE);
+    UserUpdateEditDto userUpdateEditDto = new UserUpdateEditDto(
+            "Danil",
+            "Tsaregorodtsev",
+            "czare2015@yandex.ru",
+            LocalDate.parse("2001-07-21"),
+            Role.ADMIN,
+            Gender.MALE);
 
     @Test
     public void test_findAll() {
-        List<User> users = List.of(createUser());
-        UserReadDto userReadDto = createUserReadDto();
+        List<User> users = List.of(user);
 
         when(userRepository.findAll()).thenReturn(users);
         when(userReadMapper.map(users.get(0))).thenReturn(userReadDto);
 
-        var userss = userService.findAll();
-        assertThat(userss).hasSize(1);
+        assertThat(userService.findAll()).hasSize(1);
     }
 
     @Test
     @WithMockUser(username = "czare2015@yandex.ru", password = "123", authorities = {"ADMIN", "USER"})//can be most without authorization
     public void test_findAllByFilter_validData() {
-        UserFilter userFilter = new UserFilter("Danil",
-                "Tsaregorodtsev",
-                null,
-                "czare2015@yandex.ru",
-                Role.ADMIN,
-                Gender.MALE);
-        List<User> users = List.of(new User(1L, "Danil",
-                "Tsaregorodtsev",
-                "czare2015@yandex.ru",
-                null,
-                null,
-                Role.ADMIN,
-                Gender.MALE));
-        UserReadDto userReadDto = new UserReadDto(1L, "Danil",
-                "Tsaregorodtsev",
-                "czare2015@yandex.ru",
-                null,
-                Role.ADMIN,
-                Gender.MALE);
-
         when(userRepository.findAllByFilter(userFilter)).thenReturn(users);
         when(userReadMapper.map(users.get(0))).thenReturn(userReadDto);
 
@@ -100,10 +109,7 @@ public class UserServiceTest {
 
     @Test
     public void test_findId_validData() {
-        List<User> users = List.of(createUser());
-        UserReadDto userReadDto = createUserReadDto();
-
-        when(userRepository.findById(USER_ID)).thenReturn(Optional.of(createUser()));
+        when(userRepository.findById(USER_ID)).thenReturn(Optional.of(user));
         when(userReadMapper.map(users.get(0))).thenReturn(userReadDto);
 
         var user = userService.findById(USER_ID);
@@ -113,97 +119,41 @@ public class UserServiceTest {
 
     @Test
     public void test_create_validData() {
-        UserCreateEditDto user = new UserCreateEditDto(
-                "Danil",
-                "Tsaregorodtsev",
-                "czare2015@yandex.ru",
-                LocalDate.parse("2001-07-21"),
-                "{noop}123",
-                Role.ADMIN,
-                Gender.MALE
-        );
-        User users = new User(1L, "Danil",
-                "Tsaregorodtsev",
-                "czare2015@yandex.ru",
-                null,
-                null,
-                Role.ADMIN,
-                Gender.MALE);
-        UserReadDto userReadDto = new UserReadDto(1L, "Danil",
-                "Tsaregorodtsev",
-                "czare2015@yandex.ru",
-                LocalDate.parse("2001-07-21"),
-                Role.ADMIN,
-                Gender.MALE);
-        when(userCreateEditMapper.map(user)).thenReturn(users);
-        when(userRepository.save(users)).thenReturn(users);
-        when(userReadMapper.map(users)).thenReturn(userReadDto);
+        when(userCreateEditMapper.map(userCreateEditDto)).thenReturn(user);
+        when(userRepository.save(user)).thenReturn(user);
+        when(userReadMapper.map(user)).thenReturn(userReadDto);
 
-        var userId = userService.create(user);
-        assertEquals(userId.name(), user.name());
-        assertEquals(userId.lastName(), user.lastName());
-        assertEquals(userId.username(), user.username());
-        assertEquals(userId.birthDate(), user.birthDate());
-        assertEquals(userId.role(), user.role());
-        assertEquals(userId.gender(), user.gender());
+        var userId = userService.create(userCreateEditDto);
+        assertEquals(userId.name(), userCreateEditDto.name());
+        assertEquals(userId.lastName(), userCreateEditDto.lastName());
+        assertEquals(userId.username(), userCreateEditDto.username());
+        assertEquals(userId.birthDate(), userCreateEditDto.birthDate());
+        assertEquals(userId.role(), userCreateEditDto.role());
+        assertEquals(userId.gender(), userCreateEditDto.gender());
 
     }
 
     @Test
     public void test_update_validData() {
-        UserUpdateEditDto user = new UserUpdateEditDto(
-                "Danil",
-                "Tsaregorodtsev",
-                "czare2015@yandex.ru",
-                LocalDate.parse("2001-07-21"),
-                Role.ADMIN,
-                Gender.MALE
-        );
-        User users = new User(1L, "Danil",
-                "Tsaregorodtsev",
-                "czare2015@yandex.ru",
-                null,
-                null,
-                Role.ADMIN,
-                Gender.MALE);
-        UserReadDto userReadDto = new UserReadDto(1L, "Danil",
-                "Tsaregorodtsev",
-                "czare2015@yandex.ru",
-                LocalDate.parse("2001-07-21"),
-                Role.ADMIN,
-                Gender.MALE);
-        when(userRepository.findById(USER_ID)).thenReturn(Optional.of(users));
-        when(userUpdateEditMapper.map(user, users)).thenReturn(users);
-        when(userRepository.save(users)).thenReturn(users);
-        when(userReadMapper.map(users)).thenReturn(userReadDto);
+        when(userRepository.findById(USER_ID)).thenReturn(Optional.of(user));
+        when(userUpdateEditMapper.map(userUpdateEditDto, user)).thenReturn(user);
+        when(userRepository.save(user)).thenReturn(user);
+        when(userReadMapper.map(user)).thenReturn(userReadDto);
 
-        var userU = userService.update(USER_ID, user);
+        var userU = userService.update(USER_ID, userUpdateEditDto);
         userU.ifPresent((userId)-> {
-            assertEquals(userId.name(), user.name());
-            assertEquals(userId.lastName(), user.lastName());
-            assertEquals(userId.username(), user.username());
-            assertEquals(userId.birthDate(), user.birthDate());
-            assertEquals(userId.role(), user.role());
-            assertEquals(userId.gender(), user.gender());
+            assertEquals(userId.name(), userUpdateEditDto.name());
+            assertEquals(userId.lastName(), userUpdateEditDto.lastName());
+            assertEquals(userId.username(), userUpdateEditDto.username());
+            assertEquals(userId.birthDate(), userUpdateEditDto.birthDate());
+            assertEquals(userId.role(), userUpdateEditDto.role());
+            assertEquals(userId.gender(), userUpdateEditDto.gender());
         });
     }
 
     @Test
     public void test_delete_validAndNotValidData() {
-        User users = new User(1L, "Danil",
-                "Tsaregorodtsev",
-                "czare2015@yandex.ru",
-                null,
-                null,
-                Role.ADMIN,
-                Gender.MALE);
-        UserReadDto userReadDto = new UserReadDto(1L, "Danil",
-                "Tsaregorodtsev",
-                "czare2015@yandex.ru",
-                LocalDate.parse("2001-07-21"),
-                Role.ADMIN,
-                Gender.MALE);
-        when(userRepository.findById(USER_ID)).thenReturn(Optional.of(users));
+        when(userRepository.findById(USER_ID)).thenReturn(Optional.of(user));
 
         assertTrue(userService.delete(USER_ID));
     }

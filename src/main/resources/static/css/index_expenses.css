@@ -1,0 +1,260 @@
+
+
+        .error { color: red; font-size: 0.9em; }
+        .message { color: blue; font-size: 0.9em; }
+        .form-group { margin-bottom: 1px; }
+        .filter-active { background: #e8f5e8; padding: 10px; margin: 10px 0; }
+        .h-list { max-height: 200px; overflow-y: auto; border: 1px solid #ccc; padding: 2px; width: 200px; }
+        .h-item { margin-bottom: 2px; }
+
+        .left-block {
+          float: left; /* Блок уезжает влево */
+          width: 15%; /* Задайте нужную ширину */
+          margin-right: 20px; /* Отступ справа от текста */
+        }
+        .right-content {
+          overflow: hidden; /* Или используйте float: left; для самого контента */
+        }
+        .table {
+          border-collapse: collapse;
+          table-layout: fixed;
+          width: 100%; /* Указывает, что таблица должна занять всю доступную ширину */
+          border: 1px solid black
+        }
+        th, td {
+          border: 1px solid black;
+          width: 20%;
+          padding: 8px;
+        }
+
+ /* Дополнительные стили для улучшения внешнего вида */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .left-block {
+            width: 350px;
+            background: white;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto;
+        }
+
+        .right-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #007bff;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .form-group input[type="datetime-local"],
+        .form-group input[type="number"],
+        .form-group input[type="file"] {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        .h-list {
+            max-height: 150px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px;
+            background: white;
+        }
+
+        .h-item {
+            margin-bottom: 8px;
+        }
+
+        .h-item label {
+            display: flex;
+            align-items: center;
+            font-weight: normal;
+            cursor: pointer;
+            margin: 0;
+        }
+
+        .h-item input[type="checkbox"] {
+            margin-right: 8px;
+        }
+
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        button[type="submit"] {
+            background: #28a745;
+        }
+
+        button[type="submit"]:hover {
+            background: #1e7e34;
+        }
+
+        button[formaction="/expenses/filter/reset"] {
+            background: #dc3545;
+        }
+
+        button[formaction="/expenses/filter/reset"]:hover {
+            background: #c82333;
+        }
+
+        .message {
+            background: #d4edda;
+            color: #155724;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #c3e6cb;
+            margin: 10px 0;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #f5c6cb;
+            margin: 10px 0;
+        }
+
+        .table {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .table h3 {
+            background: #343a40;
+            color: white;
+            margin: 0;
+            padding: 15px 20px;
+            font-size: 18px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #495057;
+            color: white;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 10px 15px;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .file-upload-section {
+            background: #e9ecef;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 2px dashed #adb5bd;
+        }
+
+        .file-upload-section input[type="file"] {
+            margin-bottom: 10px;
+        }
+
+        .filter-section {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .section-title {
+            color: #495057;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+
+            .left-block {
+                width: 100%;
+                box-shadow: none;
+            }
+
+            .right-content {
+                padding: 10px;
+            }
+        }
+
+.tab_head{
+    display: grid;
+    grid-template-columns: 1fr 2fr 2fr 2fr 2fr 4fr;
+    margin: auto;
+    width: 100%;
+
+}
+
+.tab_body{
+    display: grid;
+    grid-template-columns: 1fr 2fr 2fr 2fr 2fr 4fr;
+    margin: auto;
+    width: 100%;\
+
+}
+
+.cell{
+    border: 1px solid #222222;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+\

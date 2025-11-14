@@ -38,15 +38,14 @@ public class ExpensesServiceTest {
     @InjectMocks
     private ExpensesService expensesService;
 
-    List<ExpensesCreateEditDto> dtoList = List.of(new ExpensesCreateEditDto(
+    private final List<ExpensesCreateEditDto> dtoList = List.of(new ExpensesCreateEditDto(
             LocalDateTime.of(2025, 10, 12, 1, 1, 1, 1),
             BigDecimal.valueOf(123L),
             1,
             1L,
             1L,
-            1L
-    ));
-    Expenses expenses = new Expenses(
+            1L));
+    private final Expenses expenses = new Expenses(
             1L,
             LocalDateTime.of(2025, 10, 12, 1, 1, 1, 1),
             BigDecimal.valueOf(123L),
@@ -54,9 +53,8 @@ public class ExpensesServiceTest {
             new Categories(1L, "1"),
             new Descriptions(1L, "1"),
             new User(1L, "1", "2", "2@2.com",
-                    LocalDate.parse("1999-12-12"), "123", Role.ADMIN, Gender.FEMALE)
-    );
-    ExpensesReadDto expensesReadDto = new ExpensesReadDto(
+                    LocalDate.parse("1999-12-12"), "123", Role.ADMIN, Gender.FEMALE));
+    private final ExpensesReadDto expensesReadDto = new ExpensesReadDto(
             1L,
             LocalDateTime.of(2025, 10, 12, 1, 1, 1, 1),
             BigDecimal.valueOf(123L),
@@ -64,23 +62,20 @@ public class ExpensesServiceTest {
             new CategoriesReadDto(1L, "1"),
             new DescriptionsReadDto(1L, "1"),
             new UserReadDto(1L, "1", "2", "2@2.com",
-                    LocalDate.parse("1999-12-12"), Role.ADMIN, Gender.FEMALE)
-    );
+                    LocalDate.parse("1999-12-12"), Role.ADMIN, Gender.FEMALE));
 
-    ExpensesSessionFilter filterDto = new ExpensesSessionFilter(
+    private final ExpensesSessionFilter filterDto = new ExpensesSessionFilter(
             LocalDateTime.of(1999, 10, 10, 20, 20, 20),
             LocalDateTime.of(2025, 12, 10, 20, 20, 20),
             BigDecimal.valueOf(0L),
             BigDecimal.valueOf(1200L),
-            1, List.of(1L), List.of(1L), List.of(1L)
-    );
-    ExpensesFilter filter = new ExpensesFilter(
+            1, List.of(1L), List.of(1L), List.of(1L));
+    private final ExpensesFilter filter = new ExpensesFilter(
             LocalDateTime.of(1999, 10, 10, 20, 20, 20),
             LocalDateTime.of(2025, 12, 10, 20, 20, 20),
             BigDecimal.valueOf(0L),
             BigDecimal.valueOf(1200L),
-            1, List.of(1L), List.of(1L), List.of(1L)
-    );
+            1, List.of(1L), List.of(1L), List.of(1L));
 
     @Test
     public void test_create_validData() {
@@ -97,7 +92,7 @@ public class ExpensesServiceTest {
     @Test
     public void test_findAllByFilter_validData() {
         when(filterExpensesMapper.map(filterDto)).thenReturn(filter);
-        when(expensesRepository.findAllFilter(filter)).thenReturn(List.of(expenses));
+        when(expensesRepository.findAllByFilter(filter)).thenReturn(List.of(expenses));
         when(expensesReadMapper.map(expenses)).thenReturn(expensesReadDto);
 
         var exp = expensesService.findAllByFilter(filterDto);

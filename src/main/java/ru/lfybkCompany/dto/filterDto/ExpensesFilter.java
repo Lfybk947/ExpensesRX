@@ -13,4 +13,5 @@ public record ExpensesFilter(
              List<Long> categories,
              List<Long> descriptions,
              List<Long> users) {
+
 }

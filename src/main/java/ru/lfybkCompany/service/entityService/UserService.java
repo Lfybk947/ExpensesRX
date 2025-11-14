@@ -1,6 +1,7 @@
 package ru.lfybkCompany.service.entityService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
@@ -8,6 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.lfybkCompany.database.repository.UserRepository;
@@ -22,7 +24,6 @@ import ru.lfybkCompany.mapper.UserUpdateEditMapper;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -32,6 +33,8 @@ public class UserService implements UserDetailsService {
     private final UserReadMapper userReadMapper;
     private final UserCreateEditMapper userCreateEditMapper;
     private final UserUpdateEditMapper userUpdateEditMapper;
+
+    private final PasswordEncoder passwordEncoder;
 
     public List<UserReadDto> findAll() {
         return userRepository.findAll().stream()
@@ -58,6 +61,11 @@ public class UserService implements UserDetailsService {
     public UserReadDto create(UserCreateEditDto userDto) {
         return Optional.of(userDto)
                 .map(userCreateEditMapper::map)
+                .map(user -> {
+                    String hasPassword = passwordEncoder.encode(user.getPassword());
+                    user.setPassword(hasPassword);
+                    return user;
+                })
                 .map(userRepository::save)
                 .map(userReadMapper::map)
                 .orElseThrow();

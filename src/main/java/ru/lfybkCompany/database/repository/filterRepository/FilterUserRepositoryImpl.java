@@ -16,7 +16,6 @@ import ru.lfybkCompany.dto.filterDto.UserFilter;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @RequiredArgsConstructor
 public class FilterUserRepositoryImpl implements FilterUserRepository{
     private final EntityManager entityManager;

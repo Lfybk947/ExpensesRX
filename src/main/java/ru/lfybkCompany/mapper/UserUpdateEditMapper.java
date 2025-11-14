@@ -1,5 +1,6 @@
 package ru.lfybkCompany.mapper;
 
+import lombok.RequiredArgsConstructor;
 import lombok.Value;
 import org.springframework.stereotype.Component;
 import ru.lfybkCompany.database.entity.User;

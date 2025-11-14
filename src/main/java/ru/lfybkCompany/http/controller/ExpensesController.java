@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.lfybkCompany.database.entity.ExpensesColumns;
 import ru.lfybkCompany.dto.fileDto.FileUpload;
-import ru.lfybkCompany.dto.filterDto.ExpensesFilter;
 import ru.lfybkCompany.dto.filterDto.ExpensesSessionFilter;
 import ru.lfybkCompany.exception.FileProcessingException;
 import ru.lfybkCompany.exception.FileUploadException;
 import ru.lfybkCompany.service.entityService.*;
-import ru.lfybkCompany.service.fileUploadService.FileUploadToDBService;
+import ru.lfybkCompany.service.fileService.FileService;
+import ru.lfybkCompany.service.fileService.expensesFileService.UploadExpensesService;
 
 @Controller
 @SessionAttributes("expensesSessionFilter")
@@ -26,7 +26,9 @@ public class ExpensesController {
     private final CurrencyOperationsService currencyOperationsService;
     private final DescriptionsService descriptionsService;
     private final UserService userService;
-    private final FileUploadToDBService fileUploadToDBService;
+
+    private final UploadExpensesService fileUploadService;
+    private final FileService fileServiceImpl;
 
     @ModelAttribute("expensesSessionFilter")
     public ExpensesSessionFilter setupExpensesFilter() {
@@ -44,7 +46,7 @@ public class ExpensesController {
             model.addAttribute("selectedDescriptions", descriptionsService.findAll());
             model.addAttribute("selectedCurrencyOperations", currencyOperationsService.findAll());
             model.addAttribute("selectedUsers", userService.findAll());
-            model.addAttribute("userAuth", userService.getAuthorizationUser().get());
+            model.addAttribute("userAuth", userService.getAuthorizationUser().orElseThrow());
             model.addAttribute("columnsExpenses", ExpensesColumns.values());
             model.addAttribute("expensesi", expensesService.findAllByFilter(filter));
         } catch (IllegalArgumentException e) {
@@ -68,16 +70,19 @@ public class ExpensesController {
     }
 
     @PostMapping("/upload")
-    public String create(@ModelAttribute FileUpload file,
+    public String create(@ModelAttribute FileUpload fileUpload,
                          RedirectAttributes redirectAttributes) {
         try {
-            redirectAttributes.addFlashAttribute("fileName",
-                    fileUploadToDBService.uploadExpensesFileData(file.getMultipartFile()));
+            redirectAttributes.addFlashAttribute("fileExpensesUpload",
+                    fileUploadService.uploadFileData(fileServiceImpl.upload(fileUpload.getMultipartFile())));
+
         } catch (FileProcessingException e) {
-            redirectAttributes.addFlashAttribute("errorFile", ("Incorrect processing file, %S").formatted(e.getMessage()));
+            redirectAttributes
+                    .addFlashAttribute("errorFile", ("Incorrect processing file, %S").formatted(e.getMessage()));
             return "redirect:/expenses";
         } catch (FileUploadException e) {
-            redirectAttributes.addFlashAttribute("errorFile", ("Incorrect file, %S").formatted(e.getMessage()));
+            redirectAttributes
+                    .addFlashAttribute("errorFile", ("Incorrect file, %S").formatted(e.getMessage()));
             return "redirect:/expenses";
         }
 

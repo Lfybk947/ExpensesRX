@@ -2,11 +2,9 @@ package ru.lfybkCompany.database.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.proxy.HibernateProxy;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 @Entity
 @Getter
@@ -14,7 +12,6 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-//@EqualsAndHashCode(of = {"date", "sum"})
 @ToString(of = {"date", "sum"})
 public class Expenses implements BaseEntity<Long> {
 

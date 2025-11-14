@@ -1,16 +1,10 @@
 package ru.lfybkCompany.dto.filterDto;
 
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.PastOrPresent;
-import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ru.lfybkCompany.dto.createReadDto.CategoriesCreateEditDto;
-import ru.lfybkCompany.dto.createReadDto.CurrencyOperationsCreateEditDto;
-import ru.lfybkCompany.dto.createReadDto.DescriptionsCreateEditDto;
-import ru.lfybkCompany.dto.createReadDto.UserCreateEditDto;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -23,25 +17,21 @@ import java.util.List;
 public class ExpensesSessionFilter {
 
     @PastOrPresent(message = "{expenses.date.PastOrPresent}")
-    LocalDateTime fromDate;
+    private LocalDateTime fromDate;
 
     @PastOrPresent(message = "{expenses.date.PastOrPresent}")
-    LocalDateTime toDate;
+    private LocalDateTime toDate;
 
-    BigDecimal fromSum;
+    private BigDecimal fromSum;
 
-    BigDecimal toSum;
+    private BigDecimal toSum;
 
-    @Pattern(regexp = "^[0-9]*", message = "{filter.field.Pattern}")
-    Integer currencyOperations;
+    private Integer currencyOperations;
 
-    @Pattern(regexp = "^[0-9]*", message = "{filter.field.Pattern}")
-    List<Long> categories;
+    private List<Long> categories;
 
-    @Pattern(regexp = "^[0-9]*", message = "{filter.field.Pattern}")
-    List<Long> descriptions;
+    private List<Long> descriptions;
 
-    @Pattern(regexp = "^[0-9]*", message = "{filter.field.Pattern}")
-    List<Long> users;
+    private List<Long> users;
 
 }

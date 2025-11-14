@@ -2,9 +2,7 @@ package ru.lfybkCompany.database.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.proxy.HibernateProxy;
 
-import java.util.Objects;
 
 @Entity
 @AllArgsConstructor
@@ -12,7 +10,6 @@ import java.util.Objects;
 @Builder
 @Getter
 @Setter
-//@EqualsAndHashCode(of = "name")
 @ToString(of = "name")
 public class CurrencyOperations implements BaseEntity<Integer> {
 

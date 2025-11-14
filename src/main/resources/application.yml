@@ -1,0 +1,36 @@
+logging:
+  level:
+    root: INFO
+  file:
+    name: /Logging/ru.LfybkCompany
+    size: 10MB
+    path: /Logging/
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: qydeck947
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    open-in-view: false
+    properties.hibernate:
+      show_sql: true
+      hbm2ddl.auto: validate
+
+  messages:
+    basename: Messages
+    encoding: UTF-8
+
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+
+app:
+  upload:
+    upload-file: D:\tests\ExpensesRX\Files
+    content_type: csv,ofx
+
+  service:
+    logging:
+      enabled: true
+

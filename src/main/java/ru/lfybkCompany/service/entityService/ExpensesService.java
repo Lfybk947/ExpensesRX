@@ -6,7 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.lfybkCompany.database.repository.ExpensesRepository;
 import ru.lfybkCompany.dto.createReadDto.ExpensesCreateEditDto;
 import ru.lfybkCompany.dto.createReadDto.ExpensesReadDto;
-import ru.lfybkCompany.dto.filterDto.ExpensesFilter;
 import ru.lfybkCompany.dto.filterDto.ExpensesSessionFilter;
 import ru.lfybkCompany.mapper.ExpensesCreateEditMapper;
 import ru.lfybkCompany.mapper.ExpensesReadMapper;
@@ -44,7 +43,7 @@ public class ExpensesService {
     }
 
     public List<ExpensesReadDto> findAllByFilter(ExpensesSessionFilter filter) {
-         return expensesRepository.findAllFilter(filterExpensesMapper.map(filter)).stream()
+         return expensesRepository.findAllByFilter(filterExpensesMapper.map(filter)).stream()
                 //logic sum
                 .map(expensesReadMapper::map).toList();
     }

@@ -2,10 +2,8 @@ package ru.lfybkCompany.database.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.proxy.HibernateProxy;
 
 import java.time.LocalDate;
-import java.util.Objects;
 
 @Entity
 @Getter
@@ -13,7 +11,6 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-//@EqualsAndHashCode(of = "username")
 @ToString(of = "username")
 @Table(name = "users")
 public class User implements BaseEntity<Long> {

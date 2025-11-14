@@ -11,72 +11,99 @@ import ru.lfybkCompany.dto.createReadDto.UserCreateEditDto;
 import ru.lfybkCompany.dto.createReadDto.UserReadDto;
 import ru.lfybkCompany.dto.createReadDto.UserUpdateEditDto;
 import ru.lfybkCompany.mapper.UserCreateEditMapper;
+import ru.lfybkCompany.mapper.UserCreateReadMapper;
+import ru.lfybkCompany.mapper.UserReadMapper;
+import ru.lfybkCompany.mapper.UserUpdateEditMapper;
 
 import java.time.LocalDate;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 public class UserMapperTest {
     @InjectMocks
     private UserCreateEditMapper userCreateEditMapper;
+    @InjectMocks
+    private UserCreateReadMapper userCreateReadMapper;
+    @InjectMocks
+    private UserUpdateEditMapper userUpdateEditMapper;
+    @InjectMocks
+    private UserReadMapper userReadMapper;
 
-    User userValid = new User(1L, "Danil",
+    User user = new User(1L, "Danil",
             "Tsaregorodtsev",
             "czare2015@yandex.ru",
             LocalDate.parse("2001-07-21"),
             "{noop}123",
-            Role.ADMIN,
-            Gender.MALE);
-    User userNotValid = new User(1L, "Danil",
-            "Tsaregorodtsev",
-            "czare2015@yandex.ru",
-            null,
-            null,
             Role.ADMIN,
             Gender.MALE);
     UserReadDto userReadDto = new UserReadDto(1L, "Danil",
             "Tsaregorodtsev",
             "czare2015@yandex.ru",
-            null,
+            LocalDate.parse("2001-07-21"),
             Role.ADMIN,
             Gender.MALE);
-    UserCreateEditDto userCreateEditDtoValid = new UserCreateEditDto(
+    UserCreateEditDto userCreateEditDto = new UserCreateEditDto(
             "Danil",
             "Tsaregorodtsev",
             "czare2015@yandex.ru",
             LocalDate.parse("2001-07-21"),
             "{noop}123",
             Role.ADMIN,
-            Gender.MALE
-    );
-    UserCreateEditDto userCreateEditDtoNotValid = new UserCreateEditDto(
-            "Danil",
-            "Tsaregorodtsev",
-            null,
-            LocalDate.parse("2001-07-20"),
-            "{noop}123",
-            Role.ADMIN,
-            Gender.MALE
-    );
-
+            Gender.MALE);
     UserUpdateEditDto userUpdateEditDto = new UserUpdateEditDto(
             "Danil",
             "Tsaregorodtsev",
             "czare2015@yandex.ru",
             LocalDate.parse("2001-07-21"),
             Role.ADMIN,
-            Gender.MALE
-    );
+            Gender.MALE);
 
     @Test
-    public void test_dataMappers() {
-        assertEquals(test_userCreateEditMapper(userCreateEditDtoValid).getBirthDate(), userValid.getBirthDate());
+    public void test_userCreateEditMapper() {
+        var dto = userCreateEditMapper.map(userCreateEditDto);
+        assertEquals(dto.getBirthDate(), userCreateEditDto.birthDate());
+        assertEquals(dto.getName(), userCreateEditDto.name());
+        assertEquals(dto.getLastName(), userCreateEditDto.lastName());
+        assertEquals(dto.getUsername(), userCreateEditDto.username());
+        assertEquals(dto.getRole(), userCreateEditDto.role());
+        assertEquals(dto.getGender(), userCreateEditDto.gender());
+        assertEquals(dto.getPassword(), userCreateEditDto.password());
     }
 
-
-    public User test_userCreateEditMapper(UserCreateEditDto userCreateEditDto) {
-        return userCreateEditMapper.map(userCreateEditDto);
+    @Test
+    public void test_userCreateReadMapper() {
+        var dto = userCreateReadMapper.map(userReadDto);
+        assertEquals(dto.getId(), userReadDto.id());
+        assertEquals(dto.getBirthDate(), userReadDto.birthDate());
+        assertEquals(dto.getName(), userReadDto.name());
+        assertEquals(dto.getLastName(), userReadDto.lastName());
+        assertEquals(dto.getUsername(), userReadDto.username());
+        assertEquals(dto.getRole(), userReadDto.role());
+        assertEquals(dto.getGender(), userReadDto.gender());
     }
+
+    @Test
+    public void test_userUpdateEditMapper() {
+        var dto = userUpdateEditMapper.map(userUpdateEditDto);
+        assertEquals(dto.getBirthDate(), userUpdateEditDto.birthDate());
+        assertEquals(dto.getName(), userUpdateEditDto.name());
+        assertEquals(dto.getLastName(), userUpdateEditDto.lastName());
+        assertEquals(dto.getUsername(), userUpdateEditDto.username());
+        assertEquals(dto.getRole(), userUpdateEditDto.role());
+        assertEquals(dto.getGender(), userUpdateEditDto.gender());
+    }
+    
+    @Test
+    public void test_userReadMapper() {
+        var dto = userReadMapper.map(user);
+        assertEquals(dto.id(), user.getId());
+        assertEquals(dto.birthDate(), user.getBirthDate());
+        assertEquals(dto.name(), user.getName());
+        assertEquals(dto.lastName(), user.getLastName());
+        assertEquals(dto.username(), user.getUsername());
+        assertEquals(dto.role(), user.getRole());
+        assertEquals(dto.gender(), user.getGender());
+    }
+
 }

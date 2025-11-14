@@ -11,7 +11,6 @@ import ru.lfybkCompany.validator.ExpensesInfoValidator;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -22,14 +21,13 @@ public class ExpensesInfoValidatorTest {
     @InjectMocks
     private ExpensesInfoValidator expensesInfoValidator;
 
-    ExpensesCreateEditDto expensesCreateEditDto = new ExpensesCreateEditDto(
+    private final ExpensesCreateEditDto expensesCreateEditDto = new ExpensesCreateEditDto(
             LocalDateTime.of(2025, 10, 12, 1, 1, 1, 1),
             BigDecimal.valueOf(123L),
             1,
             1L,
             1L,
-            1L
-    );
+            1L);
 
     @Test
     public void test_isValid_validData() {

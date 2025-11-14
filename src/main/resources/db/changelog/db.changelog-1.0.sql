@@ -34,6 +34,15 @@ CREATE TABLE IF NOT EXISTS public.expenses (
     users_id bigint NOT NULL references public.users (id)
 );
 
+CREATE TABLE IF NOT EXISTS public.files_info (
+    id bigserial NOT NULL PRIMARY KEY,
+    file_name varchar(256) NOT NULL,
+    file_size bigint NOT NULL,
+    file_key varchar(256) NOT NULL,
+    upload_date date NOT NULL,
+    users_id bigint NOT NULL references public.users (id)
+);
+
 --CREATE TABLE IF NOT EXISTS public.expensesColumns (
 --    date_operations varchar(256) NOT NULL,
 --    sum_operations varchar(256) NOT NULL,

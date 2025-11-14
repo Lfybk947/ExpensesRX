@@ -16,7 +16,7 @@ public class FilterExpensesRepositoryImpl implements FilterExpensesRepository{
     private final UserService userService;
 
     @Override
-    public List<Expenses> findAllFilter(ExpensesFilter filter) {
+    public List<Expenses> findAllByFilter(ExpensesFilter filter) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Expenses> criteria = cb.createQuery(Expenses.class);
 
@@ -57,7 +57,7 @@ public class FilterExpensesRepositoryImpl implements FilterExpensesRepository{
             predicates.add(expenses.get("descriptions").get("id").in(filter.descriptions()));
         }
 
-        var user = userService.getAuthorizationUser().get();
+        var user = userService.getAuthorizationUser().orElseThrow();
 
         if (filter.users() != null && !filter.users().isEmpty() && user.role() == Role.ADMIN) {
             predicates.add(expenses.get("user").get("id").in(filter.users()));

@@ -40,7 +40,9 @@ select *from categories
 select *from descriptions
 select *from currency_operations
 
-delete from expenses]]></console>
+delete from expenses
+
+select *from files_info]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
