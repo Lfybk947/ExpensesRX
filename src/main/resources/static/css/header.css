@@ -1,0 +1,101 @@
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 10px;
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 80;
+}
+
+.nav-tabs {
+  display: flex;
+  list-style: none;
+}
+
+.nav-tab, .user-tab, .auth-button {
+  padding: 0.7rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 0.95rem;
+}
+
+.nav-tab {
+  background-color: #4a6cf7;
+  color: white;
+}
+
+.nav-tab:hover {
+  background-color: #3a5ce5;
+  transform: translateY(-2px);
+}
+
+.user-tab {
+  background-color: #f8f9fa;
+  color: #495057;
+  border: 1px solid #dee2e6;
+}
+
+.user-tab:hover {
+  background-color: #e9ecef;
+}
+
+.user-section {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.auth-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.auth-button {
+  background-color: #f8f9fa;
+  color: #495057;
+  border: 1px solid #dee2e6;
+}
+
+.auth-button.login {
+  background-color: #28a745;
+  color: white;
+  border: none;
+}
+
+.auth-button.login:hover {
+  background-color: #218838;
+}
+
+.auth-button.register {
+  padding: 0.7rem;
+}
+
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .user-section {
+      width: 100%;
+      justify-content: space-between;
+    }
+
+  .nav-tabs {
+    width: 100%;
+    justify-content: center;
+  }
+
+}
+

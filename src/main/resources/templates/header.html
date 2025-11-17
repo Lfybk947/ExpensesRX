@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Header</title>
+<!--    <link rel="stylesheet" href="/static/css/header.css">-->
+</head>
+<body>
+<!-- Header with Navigation -->
+<div th:fragment="header">
+    <div class="header">
+        <ul class="nav-tabs">
+            <li>
+                <form action="/expenses" method="get">
+                    <button type="submit" class="nav-tab active">
+                        Expenses
+                    </button>
+                </form>
+            </li>
+        </ul>
+
+        <div class="user-section">
+            <form th:action="@{'/users/'+${id}}" method="get" class="auth-buttons">
+                <button type="submit" class="user-tab">
+                    My Profile
+                </button>
+            </form>
+
+            <form action="/login" method="get" class="auth-buttons">
+                <button type="submit" class="auth-button login">
+                    Login
+                </button>
+            </form>
+
+            <form action="" method="get" class="auth-buttons">
+                <select name="lang" onchange="this.form.submit()" class="auth-button register">
+                    <option value="en">EN</option>
+                    <option value="ru">RU</option>
+                </select>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

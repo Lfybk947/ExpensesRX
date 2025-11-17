@@ -4,186 +4,183 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Expenses Management</title>
-    <link rel="stylesheet" href="/static/css/index_expenses.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/header.css">
+    <link rel="stylesheet" href="/static/css/expenses.css">
 </head>
 <body>
-<div class="left-block">
-    <div th:insert="~{fragment :: header}"></div>
+<!-- Header with Navigation -->
+<div th:insert="~{header :: header}" th:with="id=${userAuth.id}"></div>
 
-    <!-- Секция загрузки файлов -->
-    <div class="file-upload-section">
-        <h3 class="section-title">Upload Expenses File</h3>
-        <form th:action="@{/expenses/upload}" th:object="${fileUpload}" method="post" enctype="multipart/form-data">
-            <div class="form-group">
-                <label for="fileInput">Select File:</label>
-                <input type="file" name="file" th:field="*{multipartFile}" id="fileInput" accept=".csv,.ofx">
-                <small style="color: #666; font-size: 12px;">Supported formats: OFX, CSV</small>
-            </div>
-            <button type="submit" value="Upload">
-                📤 Upload File
-            </button>
-
-            <div th:if="${fileExpensesUpload != null}" class="message">
-                <p th:text="${fileExpensesUpload}">Message</p>
-            </div>
-            <div th:if="${errorFile != null}" class="error">
-                <p th:text="${errorFile}">Errors</p>
-            </div>
-        </form>
-    </div>
-
-    <!-- Секция фильтров -->
-    <div class="filter-section">
-        <h3 class="section-title">Filter Expenses</h3>
-        <form th:action="@{/expenses/filter}" method="post" th:object="${expensesSessionFilter}">
-
-            <div class="form-group">
-                <label>From Date:</label>
-                <input type="datetime-local" th:field="*{fromDate}">
-                <div th:if="${#fields.hasErrors('fromDate')}" class="error">
-                    <span th:each="err : ${#fields.errors('fromDate')}" th:text="${err}"></span>
+<!-- Main Content -->
+<div class="main-container">
+    <div class="left-block">
+        <!-- File upload section -->
+        <div class="file-upload-section">
+            <h3 class="section-title">Upload Expenses File</h3>
+            <form th:action="@{/expenses/upload}" th:object="${fileUpload}" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="fileInput">Select File:</label>
+                    <input type="file" name="file" th:field="*{multipartFile}" id="fileInput" accept=".csv">
+                    <small>Supported formats: CSV</small>
                 </div>
-            </div>
+                <button type="submit" value="Upload">
+                    <i class="fas fa-upload me-2"></i>Upload File
+                </button>
 
-            <div class="form-group">
-                <label>To Date:</label>
-                <input type="datetime-local" th:field="*{toDate}">
-                <div th:if="${#fields.hasErrors('toDate')}" class="error">
-                    <span th:each="err : ${#fields.errors('toDate')}" th:text="${err}"></span>
+                <div th:if="${fileExpensesUpload != null}" class="message">
+                    <p th:text="${fileExpensesUpload}">Message</p>
                 </div>
-            </div>
-
-            <div class="form-group">
-                <label>Minimum Amount:</label>
-                <input type="number" th:field="*{fromSum}" step="0.01" min="0" placeholder="0.00">
-                <div th:if="${#fields.hasErrors('fromSum')}" class="error">
-                    <span th:each="err : ${#fields.errors('fromSum')}" th:text="${err}"></span>
+                <div th:if="${errorFile != null}" class="error">
+                    <p th:text="${errorFile}">Errors</p>
                 </div>
-            </div>
-
-            <div class="form-group">
-                <label>Maximum Amount:</label>
-                <input type="number" th:field="*{toSum}" step="0.01" min="0" placeholder="0.00">
-                <div th:if="${#fields.hasErrors('toSum')}" class="error">
-                    <span th:each="err : ${#fields.errors('toSum')}" th:text="${err}"></span>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>Currency Operations:</label>
-                <div class="h-list">
-                    <div th:each="curOper : ${selectedCurrencyOperations}" class="h-item">
-                        <label>
-                            <input type="checkbox"
-                                   th:value="${curOper.id}"
-                                   th:field="*{currencyOperations}">
-                            <span th:text="${curOper.name}"></span>
-                        </label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>Categories:</label>
-                <div class="h-list">
-                    <div th:each="cat : ${selectedCategories}" class="h-item">
-                        <label>
-                            <input type="checkbox"
-                                   th:value="${cat.id}"
-                                   th:field="*{categories}">
-                            <span th:text="${cat.name}"></span>
-                        </label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>Descriptions:</label>
-                <div class="h-list">
-                    <div th:each="desc : ${selectedDescriptions}" class="h-item">
-                        <label>
-                            <input type="checkbox"
-                                   th:value="${desc.id}"
-                                   th:field="*{descriptions}">
-                            <span th:text="${desc.name}"></span>
-                        </label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>Users:</label>
-                <div class="h-list">
-                    <div th:each="user : ${selectedUsers}" class="h-item">
-                        <label>
-                            <input type="checkbox"
-                                   th:value="${user.id}"
-                                   th:field="*{users}">
-                            <span th:text="${user.username}"></span>
-                        </label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="button-group">
-                <button type="button" onclick="selectAll(this)">🔘 Select All</button>
-                <button type="submit">🔍 Apply Filter</button>
-                <button type="submit" formaction="/expenses/filter/reset">🗑️ Clear Filter</button>
-            </div>
-        </form>
-
-        <div th:if="${errors}">
-            <p style="color: red" th:each="error : ${errors}" th:text="${error.defaultMessage}">Message</p>
+            </form>
         </div>
-    </div>
-</div>
 
-<!-- Секция отображения данных -->
-<div class="right-content">
-    <div class="table" th:if="${expensesi != null}">
-        <h3>📊 Expenses Overview</h3>
-        <div class="tab_new">
-            <div class="tab_head">
-                <div class="cell">ID</div>
-                <div class="cell" th:each="column : ${columnsExpenses}" th:text="${column.name}"></div>
-            </div>
-            <div class="tab_body" th:each="expenses : ${expensesi}">
-                <div class="cell" th:text="${expenses.id}">id</div>
-                <div class="cell" th:text="${#temporals.format(expenses.date, 'yyyy-MM-dd HH:mm')}">date</div>
-                <div class="cell" th:text="${#numbers.formatDecimal(expenses.sum, 1, 2)}">sum</div>
-                <div class="cell" th:text="${expenses.currencyOperations.name}">currency operations</div>
-                <div class="cell" th:text="${expenses.categories.name}">categories</div>
-                <div class="cell" th:text="${expenses.descriptions.name}">descriptions</div>
+        <!-- Filter section -->
+        <div class="filter-section">
+            <h3 class="section-title">Filter Expenses</h3>
+            <form th:action="@{/expenses/filter}" method="post" th:object="${expensesSessionFilter}">
+
+                <div class="form-group">
+                    <label>From Date:</label>
+                    <input type="datetime-local" th:field="*{fromDate}">
+                    <div th:if="${#fields.hasErrors('fromDate')}" class="error">
+                        <span th:each="err : ${#fields.errors('fromDate')}" th:text="${err}"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>To Date:</label>
+                    <input type="datetime-local" th:field="*{toDate}">
+                    <div th:if="${#fields.hasErrors('toDate')}" class="error">
+                        <span th:each="err : ${#fields.errors('toDate')}" th:text="${err}"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Minimum Amount:</label>
+                    <input type="number" th:field="*{fromSum}" step="0.01" min="0" placeholder="0.00">
+                    <div th:if="${#fields.hasErrors('fromSum')}" class="error">
+                        <span th:each="err : ${#fields.errors('fromSum')}" th:text="${err}"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Maximum Amount:</label>
+                    <input type="number" th:field="*{toSum}" step="0.01" min="0" placeholder="0.00">
+                    <div th:if="${#fields.hasErrors('toSum')}" class="error">
+                        <span th:each="err : ${#fields.errors('toSum')}" th:text="${err}"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Currency Operations:</label>
+                    <div class="h-list">
+                        <div th:each="curOper : ${selectedCurrencyOperations}" class="h-item">
+                            <label>
+                                <input type="checkbox"
+                                       th:value="${curOper.id}"
+                                       th:field="*{currencyOperations}">
+                                <span th:text="${curOper.name}"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Categories:</label>
+                    <div class="h-list">
+                        <div th:each="cat : ${selectedCategories}" class="h-item">
+                            <label>
+                                <input type="checkbox"
+                                       th:value="${cat.id}"
+                                       th:field="*{categories}">
+                                <span th:text="${cat.name}"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Descriptions:</label>
+                    <div class="h-list">
+                        <div th:each="desc : ${selectedDescriptions}" class="h-item">
+                            <label>
+                                <input type="checkbox"
+                                       th:value="${desc.id}"
+                                       th:field="*{descriptions}">
+                                <span th:text="${desc.name}"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Users:</label>
+                    <div class="h-list">
+                        <div th:each="user : ${selectedUsers}" class="h-item">
+                            <label>
+                                <input type="checkbox"
+                                       th:value="${user.id}"
+                                       th:field="*{users}">
+                                <span th:text="${user.username}"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" onclick="selectAll(this)" style="background-color: #17a2b8;">
+                        <i class="fas fa-check-square me-2"></i>Select All
+                    </button>
+                    <button type="submit">
+                        <i class="fas fa-filter me-2"></i>Apply Filter
+                    </button>
+                    <button type="submit" formaction="/expenses/filter/reset">
+                        <i class="fas fa-broom me-2"></i>Clear Filter
+                    </button>
+                </div>
+            </form>
+
+            <div th:if="${errors}">
+                <p style="color: red" th:each="error : ${errors}" th:text="${error.defaultMessage}">Message</p>
             </div>
         </div>
-<!--        <table>-->
-<!--            <thead>-->
-<!--            <tr>-->
-<!--                <th>ID</th>-->
-<!--                <th th:each="column : ${columnsExpenses}" th:text="${column.name}">Date</th>-->
-<!--            </tr>-->
-<!--            </thead>-->
-<!--            <tbody>-->
-<!--            <tr th:each="expenses : ${expensesi}">-->
-<!--                <td th:text="${expenses.id}">id</td>-->
-<!--                <td th:text="${#temporals.format(expenses.date, 'yyyy-MM-dd HH:mm')}">date</td>-->
-<!--                <td th:text="${#numbers.formatDecimal(expenses.sum, 1, 2)}">sum</td>-->
-<!--                <td th:text="${expenses.currencyOperations.name}">currency operations</td>-->
-<!--                <td th:text="${expenses.categories.name}">categories</td>-->
-<!--                <td th:text="${expenses.descriptions.name}">descriptions</td>-->
-<!--            </tr>-->
-<!--            </tbody>-->
-<!--        </table>-->
+
     </div>
 
-    <div th:unless="${expensesi != null}" class="no-data">
-        <h3>📊 Expenses Overview</h3>
-        <p style="text-align: center; color: #666; padding: 40px;">
-            No expenses data available. Upload a file or adjust your filters.
-        </p>
+    <!-- Data display section -->
+    <div class="right-content">
+        <div class="table" th:if="${expensesi != null}">
+            <h3><i class="fas fa-chart-bar me-2"></i>Expenses Overview</h3>
+            <div class="tab_new">
+                <div class="tab_head">
+                    <div class="cell">ID</div>
+                    <div class="cell" th:each="column : ${columnsExpenses}" th:text="${column.name}"></div>
+                </div>
+                <div class="tab_body" th:each="expenses : ${expensesi}">
+                    <div class="cell" th:text="${expenses.id}">id</div>
+                    <div class="cell" th:text="${#temporals.format(expenses.date, 'yyyy-MM-dd HH:mm')}">date</div>
+                    <div class="cell" th:text="${#numbers.formatDecimal(expenses.sum, 1, 2)}">sum</div>
+                    <div class="cell" th:text="${expenses.currencyOperations.name}">currency operations</div>
+                    <div class="cell" th:text="${expenses.categories.name}">categories</div>
+                    <div class="cell" th:text="${expenses.descriptions.name}">descriptions</div>
+                </div>
+            </div>
+        </div>
+
+        <div th:unless="${expensesi != null}" class="no-data">
+            <h3><i class="fas fa-chart-bar me-2"></i>Expenses Overview</h3>
+            <p>
+                No expenses data available. Upload a file or adjust your filters.
+            </p>
+        </div>
     </div>
+
 </div>
 
 <script src="/static/js/script_expenses.js"></script>
+
 </body>
 </html>

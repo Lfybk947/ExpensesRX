@@ -25,7 +25,7 @@ public class FilterExpensesFileImpl implements FilterExpensesFile {
                 DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
 
                 var eDto = expensesRepository.findAllExpensesByUserId(
-                        userService.getAuthorizationUser().orElseThrow().id());
+                        userService.getAuthorizationUser().orElseThrow().id()).stream().map(Expenses::getDate).toList();
 
                 List<String[]> table = file.stream().map(this::convertString).toList();
                 List<Integer> columns = getIColumns(table, columnsName);
@@ -33,8 +33,7 @@ public class FilterExpensesFileImpl implements FilterExpensesFile {
             return table.stream()
                         .skip(1)
                         .map((arr) -> mapArrToList(columns, arr))
-                        .filter((ex) -> !eDto.stream().map(Expenses::getDate)
-                                .equals(LocalDateTime.parse(ex.get(0), dateTimeFormatter)))
+                        .filter((ex) -> !eDto.contains(LocalDateTime.parse(ex.get(0), dateTimeFormatter)))
                         .toList();// O(N)
 
         } catch (FileProcessingException e) {

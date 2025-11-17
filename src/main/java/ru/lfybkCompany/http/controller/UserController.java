@@ -45,6 +45,7 @@ public class UserController {
         return "user/registration";
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     @GetMapping
     public String findAllByFilter(Model model, @Validated UserFilter filter,
                                   BindingResult bindingResult,
@@ -57,13 +58,14 @@ public class UserController {
         }
         var UserReadDto = userService.findAllByFilter(filter, pageable);
         model.addAttribute("users", PageResponse.of(UserReadDto));
+        model.addAttribute("userAuth", userService.getAuthorizationUser().orElseThrow());
         model.addAttribute("filter", filter);
         model.addAttribute("roles", Role.values());
         model.addAttribute("genders", Gender.values());
         return "user/users";
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     @GetMapping("/{id}")
     public String findById(@PathVariable("id") Long id, Model model,
                            @CurrentSecurityContext SecurityContext securityContext,

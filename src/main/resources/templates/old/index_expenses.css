@@ -1,16 +1,16 @@
 
 
-        .error { color: red; font-size: 0.9em; }
-        .message { color: blue; font-size: 0.9em; }
+        .error { color: red; font-size: 0.5em; }
+        .message { color: blue; font-size: 0.5em; }
         .form-group { margin-bottom: 1px; }
-        .filter-active { background: #e8f5e8; padding: 10px; margin: 10px 0; }
+        .filter-active { background: #e8f5e8; padding: 5px; margin: 5px 0; }
         .h-list { max-height: 200px; overflow-y: auto; border: 1px solid #ccc; padding: 2px; width: 200px; }
         .h-item { margin-bottom: 2px; }
 
         .left-block {
           float: left; /* Блок уезжает влево */
-          width: 15%; /* Задайте нужную ширину */
-          margin-right: 20px; /* Отступ справа от текста */
+          width: 5%; /* Задайте нужную ширину */
+          margin-right: 5px; /* Отступ справа от текста */
         }
         .right-content {
           overflow: hidden; /* Или используйте float: left; для самого контента */
@@ -52,16 +52,16 @@
         }
 
         .form-group {
-            margin-bottom: 20px;
-            padding: 15px;
+            margin-bottom: 10px;
+            padding: 10px;
             background: #f8f9fa;
-            border-radius: 8px;
+            border-radius: 4px;
             border-left: 4px solid #007bff;
         }
 
         .form-group label {
             display: block;
-            font-weight: 600;
+            font-weight: 300;
             margin-bottom: 8px;
             color: #333;
         }
@@ -70,10 +70,10 @@
         .form-group input[type="number"],
         .form-group input[type="file"] {
             width: 100%;
-            padding: 8px 12px;
+            padding: 8px 10px;
             border: 1px solid #ddd;
             border-radius: 4px;
-            font-size: 14px;
+            font-size: 12px;
             box-sizing: border-box;
         }
 
@@ -82,12 +82,12 @@
             overflow-y: auto;
             border: 1px solid #ddd;
             border-radius: 4px;
-            padding: 10px;
+            padding: 7px;
             background: white;
         }
 
         .h-item {
-            margin-bottom: 8px;
+            margin-bottom: 5px;
         }
 
         .h-item label {
@@ -106,12 +106,12 @@
             background: #007bff;
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 7px 15px;
             border-radius: 4px;
             cursor: pointer;
             font-size: 14px;
-            margin-right: 10px;
-            margin-bottom: 10px;
+            margin-right: 7px;
+            margin-bottom: 7px;
             transition: background-color 0.3s;
         }
 
@@ -138,19 +138,19 @@
         .message {
             background: #d4edda;
             color: #155724;
-            padding: 10px;
+            padding: 5px;
             border-radius: 4px;
             border: 1px solid #c3e6cb;
-            margin: 10px 0;
+            margin: 5px 0;
         }
 
         .error {
             background: #f8d7da;
             color: #721c24;
-            padding: 10px;
+            padding: 5px;
             border-radius: 4px;
             border: 1px solid #f5c6cb;
-            margin: 10px 0;
+            margin: 5px 0;
         }
 
         .table {
@@ -192,20 +192,20 @@
 
         .file-upload-section {
             background: #e9ecef;
-            padding: 20px;
+            padding: 5px;
             border-radius: 8px;
-            margin-bottom: 20px;
+            margin-bottom: 5px;
             border: 2px dashed #adb5bd;
         }
 
         .file-upload-section input[type="file"] {
-            margin-bottom: 10px;
+            margin-bottom: 5px;
         }
 
         .filter-section {
             background: white;
             border-radius: 8px;
-            padding: 20px;
+            padding: 10px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
@@ -214,7 +214,7 @@
             border-bottom: 2px solid #007bff;
             padding-bottom: 10px;
             margin-top: 0;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
 
         @media (max-width: 768px) {

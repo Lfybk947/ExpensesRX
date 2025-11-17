@@ -1,243 +1,44 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Управление пользователями</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-  <style>
-    :root {
-        --primary-color: #3498db;
-        --secondary-color: #2c3e50;
-        --accent-color: #e74c3c;
-        --light-bg: #f8f9fa;
-        --border-color: #dee2e6;
-        --success-color: #2ecc71;
-    }
-
-    body {
-        background-color: #f5f7f9;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        color: #333;
-    }
-
-    .main-container {
-        max-width: 1400px;
-        margin: 0 auto;
-        padding: 20px;
-    }
-
-    .page-header {
-        background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
-        color: white;
-        padding: 25px;
-        border-radius: 10px;
-        margin-bottom: 25px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-
-    .filter-card {
-        background-color: white;
-        border-radius: 10px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-        margin-bottom: 25px;
-        border: none;
-        overflow: hidden;
-    }
-
-    .filter-header {
-        background-color: var(--secondary-color);
-        color: white;
-        padding: 15px 20px;
-        font-weight: 600;
-    }
-
-    .filter-body {
-        padding: 20px;
-    }
-
-    .form-group {
-        margin-bottom: 20px;
-    }
-
-    .form-label {
-        font-weight: 600;
-        color: var(--secondary-color);
-        margin-bottom: 8px;
-    }
-
-    .form-control, .form-select {
-        border-radius: 6px;
-        padding: 10px 15px;
-        border: 1px solid var(--border-color);
-        transition: all 0.3s;
-    }
-
-    .form-control:focus, .form-select:focus {
-        border-color: var(--primary-color);
-        box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
-    }
-
-    .btn-primary {
-        background-color: var(--primary-color);
-        border-color: var(--primary-color);
-        padding: 10px 25px;
-        border-radius: 6px;
-        font-weight: 600;
-        transition: all 0.3s;
-    }
-
-    .btn-primary:hover {
-        background-color: #2980b9;
-        border-color: #2980b9;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
-
-    .btn-reset {
-        background-color: #95a5a6;
-        border-color: #95a5a6;
-        color: white;
-        padding: 10px 25px;
-        border-radius: 6px;
-        font-weight: 600;
-        transition: all 0.3s;
-    }
-
-    .btn-reset:hover {
-        background-color: #7f8c8d;
-        border-color: #7f8c8d;
-        color: white;
-    }
-
-    .user-card {
-        background-color: white;
-        border-radius: 8px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        margin-bottom: 15px;
-        transition: all 0.3s;
-        border-left: 4px solid var(--primary-color);
-    }
-
-    .user-card:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    }
-
-    .user-card-body {
-        padding: 15px;
-    }
-
-    .user-name {
-        font-weight: 600;
-        color: var(--secondary-color);
-        margin-bottom: 5px;
-    }
-
-    .user-details {
-        color: #7f8c8d;
-        font-size: 0.9rem;
-    }
-
-    .pagination-container {
-        display: flex;
-        justify-content: center;
-        margin-top: 30px;
-    }
-
-    .page-info {
-        text-align: center;
-        margin: 15px 0;
-        color: #7f8c8d;
-        font-style: italic;
-    }
-
-    .error-message {
-        background-color: #ffeaea;
-        border-left: 4px solid var(--accent-color);
-        padding: 12px 15px;
-        border-radius: 4px;
-        margin-bottom: 20px;
-        color: #c0392b;
-    }
-
-    .radio-group {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 15px;
-        margin-top: 8px;
-    }
-
-    .radio-option {
-        display: flex;
-        align-items: center;
-    }
-
-    .radio-option input {
-        margin-right: 8px;
-    }
-
-    .results-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
-    }
-
-    .results-count {
-        font-weight: 600;
-        color: var(--secondary-color);
-    }
-
-    @media (max-width: 768px) {
-        .main-container {
-            padding: 10px;
-        }
-
-        .filter-card {
-            margin-bottom: 15px;
-        }
-
-        .results-header {
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        .results-count {
-            margin-bottom: 10px;
-        }
-    }
-  </style>
+  <title>User management</title>
+  <link rel="stylesheet" href="/static/css/header.css">
+  <link rel="stylesheet" href="/static/css/users.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+<!-- Header with Navigation -->
+<div th:insert="~{header :: header}" th:with="id=${userAuth.id}"></div>
+
 <div class="main-container">
-  <!-- Заголовок страницы -->
+  <!-- Header page -->
   <div class="page-header">
-    <h1><i class="fas fa-users me-2"></i>Управление пользователями</h1>
-    <p class="mb-0">Поиск и фильтрация пользователей системы</p>
+    <h1><i class="fas fa-users me-2"></i>User management</h1>
+    <p class="mb-0">Search and filter system users</p>
   </div>
 
-  <!-- Карточка фильтров -->
+  <!-- Card filter -->
   <div class="card filter-card">
     <div class="filter-header">
-      <i class="fas fa-filter me-2"></i>Фильтры поиска
+      <i class="fas fa-filter me-2"></i>Filter search
     </div>
     <div class="filter-body">
       <form th:action="@{/users}" method="get">
         <div class="row">
           <div class="col-md-6">
             <div class="form-group">
-              <label class="form-label" for="name">Имя</label>
+              <label class="form-label" for="name">Name</label>
               <input id="name" type="text" name="name" th:value="${filter.name()}"
-                     class="form-control" placeholder="Введите имя">
+                     class="form-control" placeholder="Enter your name">
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              <label class="form-label" for="lastName">Фамилия</label>
+              <label class="form-label" for="lastName">Surname</label>
               <input id="lastName" type="text" name="lastName" th:value="${filter.lastName()}"
-                     class="form-control" placeholder="Введите фамилию">
+                     class="form-control" placeholder="Enter your surname">
             </div>
           </div>
         </div>
@@ -245,7 +46,7 @@
         <div class="row">
           <div class="col-md-6">
             <div class="form-group">
-              <label class="form-label" for="birthDate">Дата рождения</label>
+              <label class="form-label" for="birthDate">Birth date</label>
               <input th:field="${filter.birthDate}" type="date"
                      class="form-control">
             </div>
@@ -254,7 +55,7 @@
             <div class="form-group">
               <label class="form-label" for="username">Email</label>
               <input id="username" type="text" name="username" th:value="${filter.username()}"
-                     class="form-control" placeholder="Введите email">
+                     class="form-control" placeholder="Enter your email">
             </div>
           </div>
         </div>
@@ -262,7 +63,7 @@
         <div class="row">
           <div class="col-md-6">
             <div class="form-group">
-              <label class="form-label">Роль пользователя</label>
+              <label class="form-label">User role</label>
               <div class="radio-group">
                 <div th:each="role : ${roles}" class="radio-option">
                   <input th:id="${'role_' + role}" type="radio" name="role"
@@ -274,7 +75,7 @@
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              <label class="form-label">Пол</label>
+              <label class="form-label">Gender</label>
               <div class="radio-group">
                 <div th:each="gender : ${genders}" class="radio-option">
                   <input th:id="${'gender_' + gender}" type="radio" name="gender"
@@ -289,14 +90,14 @@
         <div class="row">
           <div class="col-md-6">
             <div class="form-group">
-              <label class="form-label" for="page">Страница</label>
+              <label class="form-label" for="page">Pages</label>
               <input id="page" type="number" name="page" th:value="${users.metadata.page}"
                      class="form-control" min="0">
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              <label class="form-label" for="size">Размер страницы</label>
+              <label class="form-label" for="size">Page size</label>
               <input id="size" type="number" name="size" th:value="${users.metadata.size}"
                      class="form-control" min="1" max="100">
             </div>
@@ -305,17 +106,17 @@
 
         <div class="d-flex justify-content-between mt-4">
           <button type="submit" class="btn btn-primary">
-            <i class="fas fa-search me-2"></i>Применить фильтры
+            <i class="fas fa-search me-2"></i>Apply filter
           </button>
           <a th:href="@{/users}" class="btn btn-reset">
-            <i class="fas fa-redo me-2"></i>Сбросить фильтры
+            <i class="fas fa-redo me-2"></i>Clear filter
           </a>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- Сообщения об ошибках -->
+  <!-- Error message -->
   <div th:if="${errors}">
     <div class="error-message">
       <i class="fas fa-exclamation-circle me-2"></i>
@@ -323,15 +124,15 @@
     </div>
   </div>
 
-  <!-- Результаты поиска -->
+  <!-- Search result -->
   <div class="results-header">
     <h3 class="results-count">
-      <i class="fas fa-list me-2"></i>Найдено пользователей:
+      <i class="fas fa-list me-2"></i>Users found:
       <span th:text="${users.metadata.totalElement}">0</span>
     </h3>
   </div>
 
-  <!-- Список пользователей -->
+  <!-- Users list -->
   <div th:each="user : ${users.content}" class="user-card">
     <div class="user-card-body">
       <div class="user-name">
@@ -340,32 +141,29 @@
         </a>
       </div>
       <div class="user-details">
-        <div><i class="fas fa-envelope me-2"></i><span th:text="${user.username}">email</span></div>
+        <div><i class="fas fa-envelope me-2"></i><span th:text="${user.username}">Email</span></div>
         <div th:if="${user.birthDate}">
           <i class="fas fa-birthday-cake me-2"></i>
-          <span th:text="${#temporals.format(user.birthDate, 'yyyy.MM.dd')}">birth date</span>
+          <span th:text="${#temporals.format(user.birthDate, 'yyyy.MM.dd')}">Birth date</span>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Сообщение, если пользователи не найдены -->
+  <!-- Message if users are not found -->
   <div th:if="${users.content.empty}" class="text-center py-5">
     <i class="fas fa-user-slash fa-3x mb-3" style="color: #bdc3c7;"></i>
-    <h4 style="color: #7f8c8d;">Пользователи не найдены</h4>
-    <p>Попробуйте изменить параметры фильтрации</p>
+    <h4 style="color: #7f8c8d;">Users is not found</h4>
+    <p>Try changing your filtering options</p>
   </div>
 
-  <!-- Пагинация -->
+  <!-- pagination -->
   <div class="page-info" th:if="${!users.content.empty}">
-    Страница <span th:text="${users.metadata.page + 1}">1</span> из
+    Page <span th:text="${users.metadata.page + 1}">1</span> из
     <span th:text="${users.metadata.size}">1</span>
   </div>
 
-  <!-- Вставка хедера (если нужно) -->
-  <div th:insert="~{fragment :: header}"></div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
