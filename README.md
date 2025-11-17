@@ -10,7 +10,7 @@ Default pre configured users: admin admin; user user
 SCREENSHOTS:
 <details><summary><b>SCREENSHOTS:</b></summary>
 | ![Main page](/pictures/img.jpg) | | :--: | | *Main page* |
-пше
+
 [//]: # ( ...  )
 
 [//]: # (| ![Swagger]&#40;/pictures/5.jpg "Swagger"&#41; | | *Swagger* | )
