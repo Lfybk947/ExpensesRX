@@ -43,8 +43,6 @@ public class SecurityConfiguration {
                         .requestMatchers("/login", "/users", "/users/registration", "/v3/api-docs/", "/swagger-ui/")
                             .permitAll()
                         .requestMatchers("/admin/**").hasRole(Role.ADMIN.getAuthority())
-                        .requestMatchers(antMatcher("/users/{\\d}/delete")).hasAnyAuthority(
-                            Role.ADMIN.getAuthority())
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
                 .formLogin(login-> login

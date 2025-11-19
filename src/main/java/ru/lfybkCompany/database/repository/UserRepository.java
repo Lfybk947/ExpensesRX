@@ -9,6 +9,7 @@ import ru.lfybkCompany.database.entity.User;
 import ru.lfybkCompany.database.repository.filterRepository.FilterUserRepository;
 import ru.lfybkCompany.dto.filterDto.UserFilter;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 

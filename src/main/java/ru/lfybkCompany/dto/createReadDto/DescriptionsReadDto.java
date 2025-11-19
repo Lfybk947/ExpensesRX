@@ -1,5 +1,7 @@
 package ru.lfybkCompany.dto.createReadDto;
 
 
-public record DescriptionsReadDto(Long id, String name) {
+import ru.lfybkCompany.database.entity.User;
+
+public record DescriptionsReadDto(Long id, String name, User user) {
 }

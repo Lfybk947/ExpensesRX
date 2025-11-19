@@ -21,6 +21,7 @@ public class UploadExpensesServiceImpl implements UploadExpensesService {
     private final CategoriesService categoriesService;
     private final CurrencyOperationsService currencyOperationsService;
     private final DescriptionsService descriptionsService;
+    private final UserService userService;
 
     private final FileService fileServiceImpl;
     private final FilterExpensesFileImpl filterExpensesFileImpl;

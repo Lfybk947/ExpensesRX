@@ -6,7 +6,10 @@
 }
 
 body {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    /*background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);*/
+    background-color: #f5f7fa;
+    color: #333;
+
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -32,7 +35,8 @@ body {
     left: 0;
     right: 0;
     height: 4px;
-    background: linear-gradient(90deg, #667eea, #764ba2);
+    /*background: linear-gradient(90deg, #667eea, #764ba2);*/
+
 }
 
 .locale-container {
@@ -49,7 +53,8 @@ body {
 .login-icon {
     width: 70px;
     height: 70px;
-    background: linear-gradient(135deg, #667eea, #764ba2);
+    /*background: linear-gradient(135deg, #667eea, #764ba2);*/
+    background: linear-gradient(135deg, #6a82fb, #4a6cf7);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -159,9 +164,12 @@ form {
 }
 
 .btn-primary {
+background-color: #4a6cf7;
+  color: white;
+  /*
     background: linear-gradient(135deg, #667eea, #764ba2);
     color: white;
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);*/
 }
 
 .btn-primary:hover {

@@ -20,6 +20,10 @@ public class Descriptions implements BaseEntity<Long>{
     @Column(name = "descriptions_name", unique = true)
     private String name;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "users_id", nullable = false)
+    private User user;
+
     public boolean equals(final Object o) {
         if (!(o instanceof Descriptions that)) return false;
         return getId() != null && getId().equals(that.getId());

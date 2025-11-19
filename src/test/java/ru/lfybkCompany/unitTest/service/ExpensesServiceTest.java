@@ -38,6 +38,8 @@ public class ExpensesServiceTest {
     @InjectMocks
     private ExpensesService expensesService;
 
+    private final User user = new User(1L, "1", "2", "1@2.com",
+            LocalDate.parse("1999-12-12"), "123", Role.ADMIN, Gender.FEMALE);
     private final List<ExpensesCreateEditDto> dtoList = List.of(new ExpensesCreateEditDto(
             LocalDateTime.of(2025, 10, 12, 1, 1, 1, 1),
             BigDecimal.valueOf(123L),
@@ -49,18 +51,18 @@ public class ExpensesServiceTest {
             1L,
             LocalDateTime.of(2025, 10, 12, 1, 1, 1, 1),
             BigDecimal.valueOf(123L),
-            new CurrencyOperations(1, "1"),
-            new Categories(1L, "1"),
-            new Descriptions(1L, "1"),
+            new CurrencyOperations(1, "1", user),
+            new Categories(1L, "1", user),
+            new Descriptions(1L, "1", user),
             new User(1L, "1", "2", "2@2.com",
                     LocalDate.parse("1999-12-12"), "123", Role.ADMIN, Gender.FEMALE));
     private final ExpensesReadDto expensesReadDto = new ExpensesReadDto(
             1L,
             LocalDateTime.of(2025, 10, 12, 1, 1, 1, 1),
             BigDecimal.valueOf(123L),
-            new CurrencyOperationsReadDto(1, "1"),
-            new CategoriesReadDto(1L, "1"),
-            new DescriptionsReadDto(1L, "1"),
+            new CurrencyOperationsReadDto(1, "1", user),
+            new CategoriesReadDto(1L, "1", user),
+            new DescriptionsReadDto(1L, "1", user),
             new UserReadDto(1L, "1", "2", "2@2.com",
                     LocalDate.parse("1999-12-12"), Role.ADMIN, Gender.FEMALE));
 

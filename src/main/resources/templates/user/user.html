@@ -24,7 +24,9 @@
         <div class="edit-header">
             <i class="fas fa-user-cog"></i>
             <span>User Profile</span>
-            <div class="user-id-badge">ID: <span th:text="${user.id}">#</span></div>
+            <form th:if="${user.role.name() == 'ADMIN'}">
+                <div class="user-id-badge">ID: <span th:text="${user.id}">#</span></div>
+            </form>
         </div>
 
         <div class="edit-body">
@@ -109,9 +111,11 @@
                 </div>
 
                 <div class="btn-group">
-                    <a th:href="@{/users}" class="btn btn-secondary">
-                        <i class="fas fa-arrow-left me-2"></i>Back to List
-                    </a>
+                    <form  th:if="${user.role.name() == 'ADMIN'}">
+                        <a th:href="@{/users}" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left me-2"></i>Back to List users
+                        </a>
+                    </form>
                     <button type="submit" class="btn btn-primary">
                         <i class="fas fa-save me-2"></i>Update User
                     </button>

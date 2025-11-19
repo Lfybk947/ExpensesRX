@@ -19,13 +19,13 @@ public class User implements BaseEntity<Long> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name_users", nullable = false)
+    @Column(name = "name_user", nullable = false)
     private String name;
 
-    @Column(name = "last_name_users", nullable = false)
+    @Column(name = "last_name_user", nullable = false)
     private String lastName;
 
-    @Column(name = "email", nullable = false, unique = true)
+    @Column(name = "username", nullable = false, unique = true)
     private String username;
 
     @Column(name = "birthdate", nullable = false)

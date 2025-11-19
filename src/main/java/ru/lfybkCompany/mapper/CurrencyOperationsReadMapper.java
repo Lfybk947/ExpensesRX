@@ -10,6 +10,7 @@ public class CurrencyOperationsReadMapper implements Mapper<CurrencyOperations, 
     public CurrencyOperationsReadDto map(CurrencyOperations entity) {
         return new CurrencyOperationsReadDto(
                 entity.getId(),
-                entity.getName());
+                entity.getName(),
+                entity.getUser());
     }
 }

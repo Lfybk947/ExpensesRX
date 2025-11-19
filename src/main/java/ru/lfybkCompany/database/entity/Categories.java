@@ -20,6 +20,10 @@ public class Categories implements BaseEntity<Long> {
     @Column(name = "categories_name", unique = true)
     private String name;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "users_id", nullable = false)
+    private User user;
+
     public boolean equals(final Object o) {
         if (!(o instanceof Categories that)) return false;
         return getId() != null && getId().equals(that.getId());

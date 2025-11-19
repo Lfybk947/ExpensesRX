@@ -30,31 +30,31 @@ public class UserMapperTest {
     @InjectMocks
     private UserReadMapper userReadMapper;
 
-    User user = new User(1L, "Danil",
-            "Tsaregorodtsev",
-            "czare2015@yandex.ru",
+    User user = new User(1L, "admin",
+            "admin",
+            "admin@admin.com",
             LocalDate.parse("2001-07-21"),
-            "{noop}123",
+            "11",
             Role.ADMIN,
             Gender.MALE);
-    UserReadDto userReadDto = new UserReadDto(1L, "Danil",
-            "Tsaregorodtsev",
-            "czare2015@yandex.ru",
+    UserReadDto userReadDto = new UserReadDto(1L, "admin",
+            "admin",
+            "admin@admin.com",
             LocalDate.parse("2001-07-21"),
             Role.ADMIN,
             Gender.MALE);
     UserCreateEditDto userCreateEditDto = new UserCreateEditDto(
-            "Danil",
-            "Tsaregorodtsev",
-            "czare2015@yandex.ru",
+            "admin",
+            "admin",
+            "admin@admin.com",
             LocalDate.parse("2001-07-21"),
-            "{noop}123",
+            "11",
             Role.ADMIN,
             Gender.MALE);
     UserUpdateEditDto userUpdateEditDto = new UserUpdateEditDto(
-            "Danil",
-            "Tsaregorodtsev",
-            "czare2015@yandex.ru",
+            "admin",
+            "admin",
+            "admin@admin.com",
             LocalDate.parse("2001-07-21"),
             Role.ADMIN,
             Gender.MALE);

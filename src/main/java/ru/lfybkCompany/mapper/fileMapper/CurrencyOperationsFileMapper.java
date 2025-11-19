@@ -7,6 +7,7 @@ import ru.lfybkCompany.dto.createReadDto.CurrencyOperationsReadDto;
 import ru.lfybkCompany.exception.FileProcessingException;
 import ru.lfybkCompany.mapper.Mapper;
 import ru.lfybkCompany.service.entityService.CurrencyOperationsService;
+import ru.lfybkCompany.service.entityService.UserService;
 import ru.lfybkCompany.service.fileService.expensesFileService.FilterExpensesFile;
 
 import java.util.List;
@@ -16,17 +17,19 @@ import java.util.List;
 public class CurrencyOperationsFileMapper implements
         Mapper<List<List<String>>, List<CurrencyOperationsCreateEditDto>> {
     private final CurrencyOperationsService currencyOperationsService;
+    private final UserService userService;
 
     @Override
     public List<CurrencyOperationsCreateEditDto> map(List<List<String>> entity) {
         try {
-            List<CurrencyOperationsReadDto> coDto = currencyOperationsService.findAll();
+            var user = userService.getAuthorizationUser().orElseThrow();
+            List<CurrencyOperationsReadDto> coDto = currencyOperationsService.findAllByUserFromMapper(user);
 
             return entity.stream()
                     .map((arr) -> arr.get(2))
                     .distinct()
                     .filter((co)-> coDto.stream().noneMatch((c)-> co.contains(c.name())))
-                    .map(CurrencyOperationsCreateEditDto::new)
+                    .map((name)-> new CurrencyOperationsCreateEditDto(name, user.id()))
                     .toList();// O(N)
 
         } catch (FileProcessingException e) {

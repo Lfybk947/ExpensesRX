@@ -8,4 +8,6 @@ import java.util.List;
 
 @Repository
 public interface CategoriesRepository extends JpaRepository<Categories, Long> {
+
+    List<Categories> findAllByUserId(Long id);
 }

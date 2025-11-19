@@ -38,8 +38,8 @@ public class FileUploadServiceTest {
 
     @BeforeEach
     public void create() throws IOException {
-        UserCreateEditDto user = new UserCreateEditDto( "1", "1", "czare2015@yandex.ru",
-                LocalDate.of(1999, 12, 22), "{noop}123", Role.ADMIN, Gender.MALE);
+        UserCreateEditDto user = new UserCreateEditDto( "1", "1", "admin@admin.com",
+                LocalDate.of(1999, 12, 22), "11", Role.ADMIN, Gender.MALE);
         userService.create(user);
         Path path = Paths.get("D:\\tests\\ExpensesRX\\src\\test\\resources\\testFiles\\Operations Wed Apr 21 2021-Sun Oct 26 2025.csv");
         MockMultipartFile file = new MockMultipartFile("file", "Operations Wed Apr 21 2021-Sun Oct 26 2025.csv",

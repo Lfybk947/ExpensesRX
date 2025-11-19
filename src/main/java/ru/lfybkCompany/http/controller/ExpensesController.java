@@ -39,14 +39,15 @@ public class ExpensesController {
     @GetMapping
     public String findAllByFilter(Model model,
                                   @ModelAttribute("expensesSessionFilter") ExpensesSessionFilter filter) {
+        var userAuth = userService.getAuthorizationUser().orElseThrow();
         try {
             model.addAttribute("fileUpload", new FileUpload());
             model.addAttribute("expensesSessionFilter", filter);
-            model.addAttribute("selectedCategories", categoriesService.findAll());
-            model.addAttribute("selectedDescriptions", descriptionsService.findAll());
-            model.addAttribute("selectedCurrencyOperations", currencyOperationsService.findAll());
-            model.addAttribute("selectedUsers", userService.findAll());
-            model.addAttribute("userAuth", userService.getAuthorizationUser().orElseThrow());
+            model.addAttribute("selectedCategories", categoriesService.findAllByUser(userAuth));
+            model.addAttribute("selectedDescriptions", descriptionsService.findAllByUser(userAuth));
+            model.addAttribute("selectedCurrencyOperations", currencyOperationsService.findAllByUser(userAuth));
+            model.addAttribute("selectedUsers", userService.findAllByUser(userAuth));
+            model.addAttribute("userAuth", userAuth);
             model.addAttribute("columnsExpenses", ExpensesColumns.values());
             model.addAttribute("expensesi", expensesService.findAllByFilter(filter));
         } catch (IllegalArgumentException e) {
@@ -59,8 +60,7 @@ public class ExpensesController {
     @PostMapping("/filter")
     public String applyFilter(@ModelAttribute("expensesSessionFilter") @Validated ExpensesSessionFilter filter,
                               BindingResult bindingResult,
-                              RedirectAttributes redirectAttributes,
-                              Model model) {
+                              RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addAttribute("org.springframework.validation.BindingResult.expensesSessionFilter", bindingResult);
             return "redirect:/expenses";

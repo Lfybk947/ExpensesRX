@@ -7,7 +7,7 @@ import ru.lfybkCompany.dto.createReadDto.DescriptionsReadDto;
 import ru.lfybkCompany.exception.FileProcessingException;
 import ru.lfybkCompany.mapper.Mapper;
 import ru.lfybkCompany.service.entityService.DescriptionsService;
-import ru.lfybkCompany.service.fileService.expensesFileService.FilterExpensesFile;
+import ru.lfybkCompany.service.entityService.UserService;
 
 import java.util.List;
 
@@ -15,17 +15,19 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DescriptionsFileMapper implements Mapper<List<List<String>>, List<DescriptionsCreateEditDto>> {
     private final DescriptionsService descriptionsService;
+    private final UserService userService;
 
     @Override
     public List<DescriptionsCreateEditDto> map(List<List<String>> entity) {
         try {
-            List<DescriptionsReadDto> dDto = descriptionsService.findAll();
+            var user = userService.getAuthorizationUser().orElseThrow();
+            List<DescriptionsReadDto> dDto = descriptionsService.findAllByUserFromMapper(user);
 
             return entity.stream()
                     .map((list) -> list.get(4))
                     .distinct()
                     .filter((de)-> dDto.stream().noneMatch((d)-> de.equals(d.name())))
-                    .map(DescriptionsCreateEditDto::new)
+                    .map((name)-> new DescriptionsCreateEditDto(name, user.id()))
                     .toList();// O(N)
 
         } catch (FileProcessingException e) {

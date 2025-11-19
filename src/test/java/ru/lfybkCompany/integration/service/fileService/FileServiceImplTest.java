@@ -37,9 +37,10 @@ public class FileServiceImplTest {
 
     @BeforeEach
     public void create() throws IOException {
-        UserCreateEditDto user = new UserCreateEditDto( "1", "1", "czare2015@yandex.ru",
-                LocalDate.of(1999, 12, 22), "{noop}123", Role.ADMIN, Gender.MALE);
+        UserCreateEditDto user = new UserCreateEditDto( "1", "1", "admin@admin.com",
+                LocalDate.of(1999, 12, 22), "11", Role.ADMIN, Gender.MALE);
         userService.create(user);
+
         Path path = Paths.get("D:\\tests\\ExpensesRX\\src\\test\\resources\\testFiles\\operations.csv");
         MockMultipartFile file = new MockMultipartFile("file", "operations.csv",
                 "text/csv",
@@ -49,7 +50,7 @@ public class FileServiceImplTest {
     }
 
     @Test
-    @WithMockUser(username = "czare2015@yandex.ru", password = "123", authorities = {"ADMIN", "USER"})
+    @WithMockUser(username = "admin@admin.com", password = "11", authorities = {"ADMIN", "USER"})
     public void test_upload_1() throws IOException {
         Path path = Paths.get(
                 "D:\\tests\\ExpensesRX\\src\\test\\resources\\testFiles\\Operations Wed Apr 21 2021-Sun Oct 26 2025.csv");
@@ -62,7 +63,7 @@ public class FileServiceImplTest {
     }
 
     @Test
-    @WithMockUser(username = "czare2015@yandex.ru", password = "123", authorities = {"ADMIN", "USER"})
+    @WithMockUser(username = "admin@admin.com", password = "11", authorities = {"ADMIN", "USER"})
     public void test_upload_2() throws IOException {
         Path path = Paths.get(
                 "D:\\tests\\ExpensesRX\\src\\test\\resources\\testFiles\\Operations Wed Apr 21 2021-Sun Oct 26 2025.ofx");
@@ -75,7 +76,7 @@ public class FileServiceImplTest {
     }
 
     @Test
-    @WithMockUser(username = "czare2015@yandex.ru", password = "123", authorities = {"ADMIN", "USER"})
+    @WithMockUser(username = "admin@admin.com", password = "11", authorities = {"ADMIN", "USER"})
     public void test_upload_3() throws IOException {
         Path path = Paths.get(
                 "D:\\tests\\ExpensesRX\\src\\test\\resources\\testFiles\\Operations Wed Apr 21 2021-Sun Oct 26 2025.xls");
@@ -87,7 +88,7 @@ public class FileServiceImplTest {
     }
 
     @Test
-    @WithMockUser(username = "czare2015@yandex.ru", password = "123", authorities = {"ADMIN", "USER"})
+    @WithMockUser(username = "admin@admin.com", password = "11", authorities = {"ADMIN", "USER"})
     public void test_download() throws IOException {
 
         var resource = fileService.download(key);
@@ -97,7 +98,7 @@ public class FileServiceImplTest {
     }
 
     @Test
-    @WithMockUser(username = "czare2015@yandex.ru", password = "123", authorities = {"ADMIN", "USER"})
+    @WithMockUser(username = "admin@admin.com", password = "11", authorities = {"ADMIN", "USER"})
     public void test_get() {
 
         var list = fileService.get(key);
@@ -106,7 +107,7 @@ public class FileServiceImplTest {
     }
 
     @Test
-    @WithMockUser(username = "czare2015@yandex.ru", password = "123", authorities = {"ADMIN", "USER"})
+    @WithMockUser(username = "admin@admin.com", password = "11", authorities = {"ADMIN", "USER"})
     public void test_findById() {
         Long id = 1L;
 

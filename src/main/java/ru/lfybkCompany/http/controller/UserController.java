@@ -35,12 +35,10 @@ public class UserController {
 
     @GetMapping("/registration")
     public String registration(Model model,
-                               @ModelAttribute("user") UserCreateEditDto user,
-                               BindingResult bindingResult) {
+                               @ModelAttribute("user") UserCreateEditDto user) {
         model.addAttribute("user", user);
         model.addAttribute("roles", Role.values());
         model.addAttribute("genders", Gender.values());
-        model.addAttribute("errors", bindingResult.getAllErrors());
 
         return "user/registration";
     }
@@ -65,7 +63,7 @@ public class UserController {
         return "user/users";
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     @GetMapping("/{id}")
     public String findById(@PathVariable("id") Long id, Model model,
                            @CurrentSecurityContext SecurityContext securityContext,
@@ -107,6 +105,7 @@ public class UserController {
                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     @PostMapping("/{id}/delete")
     public String delete(@PathVariable("id") Long id) {
         if (!userService.delete(id)) {

@@ -1,14 +1,15 @@
 package ru.lfybkCompany.integration.service.entityService;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.event.annotation.BeforeTestMethod;
 import ru.lfybkCompany.database.entity.Gender;
 import ru.lfybkCompany.database.entity.Role;
 import ru.lfybkCompany.dto.createReadDto.*;
-import ru.lfybkCompany.dto.filterDto.ExpensesFilter;
 import ru.lfybkCompany.dto.filterDto.ExpensesSessionFilter;
 import ru.lfybkCompany.integration.annotation.IT;
 import ru.lfybkCompany.service.entityService.*;
@@ -39,13 +40,11 @@ public class ExpensesServiceTest {
     private UserService userService;
 
     private List<ExpensesCreateEditDto> createEditDto;
-    private static final String NAME = "name";
-    private static final Long USER_ID = 1L;
 
     @BeforeEach
     public void create() {
-        UserCreateEditDto user = new UserCreateEditDto( "1", "1", "czare2015@yandex.ru",
-                LocalDate.of(1999, 12, 22), "{noop}123", Role.ADMIN, Gender.MALE);
+        UserCreateEditDto user = new UserCreateEditDto( "1", "1", "admin@admin.com",
+                LocalDate.of(1999, 12, 22), "11", Role.ADMIN, Gender.MALE);
         userService.create(user);
 
         createEditDto = new ArrayList<>();
@@ -57,9 +56,9 @@ public class ExpensesServiceTest {
                 1L,
                 1L
                 ));
-        currencyOperationsService.create(List.of(new CurrencyOperationsCreateEditDto(NAME)));
-        categoriesService.create(List.of(new CategoriesCreateEditDto(NAME)));
-        descriptionsService.create(List.of(new DescriptionsCreateEditDto(NAME)));
+        currencyOperationsService.create(List.of(new CurrencyOperationsCreateEditDto("1", 1L)));
+        categoriesService.create(List.of(new CategoriesCreateEditDto("1", 1L)));
+        descriptionsService.create(List.of(new DescriptionsCreateEditDto("1", 1L)));
 
         List<ExpensesCreateEditDto> createEditDto2 = new ArrayList<>();
         createEditDto2.add(new ExpensesCreateEditDto(
@@ -74,7 +73,7 @@ public class ExpensesServiceTest {
     }
 
     @Test
-    @WithMockUser(username = "czare2015@yandex.ru", password = "123", authorities = {"ADMIN", "USER"})
+    @WithMockUser(username = "admin@admin.com", password = "11", authorities = {"ADMIN", "USER"})
     public void test_create() {
         var result = expensesService.create(createEditDto);
         assertEquals(createEditDto.get(0).date(), result.get(0).date());
@@ -93,14 +92,14 @@ public class ExpensesServiceTest {
     }
 
     @Test
-    @WithMockUser(username = "czare2015@yandex.ru", password = "123", authorities = {"ADMIN", "USER"})
+    @WithMockUser(username = "admin@admin.com", password = "11", authorities = {"ADMIN", "USER"})
     public void test_findAllExpensesByUserId() {
-        var result = expensesService.findAllExpensesByUserId(USER_ID);
+        var result = expensesService.findAllExpensesByUserId(1L);
         assertFalse(result.isEmpty());
     }
 
     @Test
-    @WithMockUser(username = "czare2015@yandex.ru", password = "123", authorities = {"ADMIN", "USER"})
+    @WithMockUser(username = "admin@admin.com", password = "11", authorities = {"ADMIN", "USER"})
     public void test_findAllByFilter() {
         ExpensesSessionFilter expensesFilter = new ExpensesSessionFilter(
                 LocalDateTime.of(1998, 10, 10, 23, 6),

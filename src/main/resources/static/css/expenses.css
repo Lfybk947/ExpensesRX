@@ -28,13 +28,11 @@ body {
   }
 }
 
-
 .left-block {
   display: flex;
   flex-direction: column;
   gap: 2rem;
 }
-
 
 .file-upload-section, .filter-section {
   background-color: white;

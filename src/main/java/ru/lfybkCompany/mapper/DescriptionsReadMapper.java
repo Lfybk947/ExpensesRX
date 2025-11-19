@@ -10,6 +10,7 @@ public class DescriptionsReadMapper implements Mapper<Descriptions, Descriptions
     public DescriptionsReadDto map(Descriptions entity) {
         return new DescriptionsReadDto(
                 entity.getId(),
-                entity.getName());
+                entity.getName(),
+                entity.getUser());
     }
 }

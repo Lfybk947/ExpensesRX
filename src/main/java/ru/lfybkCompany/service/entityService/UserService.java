@@ -12,7 +12,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.lfybkCompany.database.entity.Role;
 import ru.lfybkCompany.database.repository.UserRepository;
+import ru.lfybkCompany.dto.createReadDto.DescriptionsReadDto;
 import ru.lfybkCompany.dto.createReadDto.UserCreateEditDto;
 import ru.lfybkCompany.dto.filterDto.UserFilter;
 import ru.lfybkCompany.dto.createReadDto.UserReadDto;
@@ -39,6 +41,10 @@ public class UserService implements UserDetailsService {
     public List<UserReadDto> findAll() {
         return userRepository.findAll().stream()
                 .map(userReadMapper::map).toList();
+    }
+
+    public List<UserReadDto> findAllByUser(UserReadDto user) {
+        return user.role().equals(Role.ADMIN) ? findAll() : List.of(user);
     }
 
     public List<UserReadDto> findAllByFilter(UserFilter filter) {

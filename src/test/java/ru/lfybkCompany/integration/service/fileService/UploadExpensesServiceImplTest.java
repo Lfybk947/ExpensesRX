@@ -46,9 +46,10 @@ public class UploadExpensesServiceImplTest {
 
     @BeforeEach
     public void create() throws IOException {
-        UserCreateEditDto user = new UserCreateEditDto( "1", "1", "czare2015@yandex.ru",
-                LocalDate.of(1999, 12, 22), "{noop}123", Role.ADMIN, Gender.MALE);
+        UserCreateEditDto user = new UserCreateEditDto( "1", "1", "admin@admin.com",
+                LocalDate.of(1999, 12, 22), "11", Role.ADMIN, Gender.MALE);
         userService.create(user);
+
         Path path = Paths.get("D:\\tests\\ExpensesRX\\src\\test\\resources\\testFiles\\operations.csv");
         MockMultipartFile file = new MockMultipartFile("file", "operations.csv",
                 "text/csv",
@@ -65,7 +66,7 @@ public class UploadExpensesServiceImplTest {
     }
 
     @Test
-    @WithMockUser(username = "czare2015@yandex.ru", password = "123", authorities = {"ADMIN", "USER"})
+    @WithMockUser(username = "admin@admin.com", password = "11", authorities = {"ADMIN", "USER"})
     public void test_uploadFileData_valid() {
         var n1 = currentTimeMillis();
         var name = uploadExpensesService.uploadFileData(fileInfoDto);
@@ -74,7 +75,7 @@ public class UploadExpensesServiceImplTest {
     }
 
     @Test
-    @WithMockUser(username = "czare2015@yandex.ru", password = "123", authorities = {"ADMIN", "USER"})
+    @WithMockUser(username = "admin@admin.com", password = "11", authorities = {"ADMIN", "USER"})
     public void test_uploadFileData_not_valid() {
         boolean resultTest = true;
         try {

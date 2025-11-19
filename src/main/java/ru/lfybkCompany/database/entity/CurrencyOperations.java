@@ -20,6 +20,10 @@ public class CurrencyOperations implements BaseEntity<Integer> {
     @Column(nullable = false)
     private String name;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "users_id", nullable = false)
+    private User user;
+
     public boolean equals(final Object o) {
         if (!(o instanceof CurrencyOperations that)) return false;
         return getId() != null && getId().equals(that.getId());

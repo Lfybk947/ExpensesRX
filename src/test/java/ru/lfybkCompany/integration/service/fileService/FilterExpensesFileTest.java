@@ -38,9 +38,10 @@ public class FilterExpensesFileTest {
 
     @BeforeEach
     public void getFileList() throws IOException {
-        UserCreateEditDto user = new UserCreateEditDto( "1", "1", "czare2015@yandex.ru",
-                LocalDate.of(1999, 12, 22), "{noop}123", Role.ADMIN, Gender.MALE);
+        UserCreateEditDto user = new UserCreateEditDto( "1", "1", "admin@admin.com",
+                LocalDate.of(1999, 12, 22), "11", Role.ADMIN, Gender.MALE);
         userService.create(user);
+
         Path path = Paths.get("D:\\tests\\ExpensesRX\\src\\test\\resources\\testFiles\\operations.csv");
         MockMultipartFile file = new MockMultipartFile("file", "testFiles/operations.csv",
                 "text/csv",
@@ -55,7 +56,7 @@ public class FilterExpensesFileTest {
     }
 
     @Test
-    @WithMockUser(username = "czare2015@yandex.ru", password = "123", authorities = {"ADMIN", "USER"})
+    @WithMockUser(username = "admin@admin.com", password = "11", authorities = {"ADMIN", "USER"})
     public void test_checkUnique_valid() {
         var list2 = filterExpensesFile.checkUnique(fileUploadService.get(TEST_FILE_NAME));
         assertThat(list2.get(0).size()).isEqualTo(5);
@@ -63,7 +64,7 @@ public class FilterExpensesFileTest {
     }
 
     @Test
-    @WithMockUser(username = "czare2015@yandex.ru", password = "123", authorities = {"ADMIN", "USER"})
+    @WithMockUser(username = "admin@admin.com", password = "11", authorities = {"ADMIN", "USER"})
     public void test_checkUnique_not_valid() {
         var list2 = filterExpensesFile.checkUnique(fileUploadService.get(TEST_FILE_NAME_2));
         assertThat(list2.isEmpty());

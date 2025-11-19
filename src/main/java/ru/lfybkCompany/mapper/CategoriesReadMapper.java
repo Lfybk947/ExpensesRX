@@ -10,6 +10,7 @@ public class CategoriesReadMapper implements Mapper<Categories, CategoriesReadDt
     public CategoriesReadDto map(Categories entity) {
         return new CategoriesReadDto(
                 entity.getId(),
-                entity.getName());
+                entity.getName(),
+                entity.getUser());
     }
 }

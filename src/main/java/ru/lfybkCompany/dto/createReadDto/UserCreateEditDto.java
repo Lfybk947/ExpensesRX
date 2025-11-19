@@ -16,7 +16,7 @@ public record UserCreateEditDto(
         @DateTimeFormat(pattern = "yyyy-MM-dd")
         @PastOrPresent(message = "{user.birthdate.PastOrPresent}")
         @NotNull(message = "{user.birthdate.NotNull}") LocalDate birthDate,
-        @Size(min = 2, max = 20) @NotBlank(message = "{user.password.notBlank}") String password,
+        @Size(message = "{user.password.size}", min = 2, max = 20) @NotBlank(message = "{user.password.notBlank}") String password,
         @NotNull(message = "{user.role.notNull}") Role role,
         @NotNull(message = "{user.gender.notNull}") Gender gender) {
 

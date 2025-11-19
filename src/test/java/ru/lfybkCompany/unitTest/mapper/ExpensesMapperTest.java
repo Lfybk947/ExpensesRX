@@ -49,35 +49,33 @@ public class ExpensesMapperTest {
     @InjectMocks
     private ExpensesCreateEditMapper expensesCreateEditMapper;
 
-
+    private final User user = new User(4L, "4", "2", "admin@admin.com",
+            LocalDate.parse("1999-12-12"), "123", Role.ADMIN, Gender.FEMALE);
     private final ExpensesCreateEditDto expensesCreateEditDto = new ExpensesCreateEditDto(
             LocalDateTime.of(2025, 10, 12, 1, 1, 1, 1),
             BigDecimal.valueOf(123L),
             1,
             2L,
             3L,
-            4L);
+            user.getId());
     private final Expenses expenses = new Expenses(
             1L,
             LocalDateTime.of(2025, 10, 12, 1, 1, 1, 1),
             BigDecimal.valueOf(123L),
-            new CurrencyOperations(1, "1"),
-            new Categories(2L, "2"),
-            new Descriptions(3L, "3"),
-            new User(4L, "4", "2", "2@2.com",
-                    LocalDate.parse("1999-12-12"), "123", Role.ADMIN, Gender.FEMALE));
+            new CurrencyOperations(1, "1", user),
+            new Categories(2L, "2", user),
+            new Descriptions(3L, "3", user),
+            user);
 
-    private final CurrencyOperationsReadDto currencyOperationsReadDto = new CurrencyOperationsReadDto(1, "1");
-    private final CategoriesReadDto categoriesReadDto = new CategoriesReadDto(2L, "2");
-    private final DescriptionsReadDto descriptionsReadDto = new DescriptionsReadDto(3L, "3");
+    private final CurrencyOperationsReadDto currencyOperationsReadDto = new CurrencyOperationsReadDto(1, "1", user);
+    private final CategoriesReadDto categoriesReadDto = new CategoriesReadDto(2L, "2", user);
+    private final DescriptionsReadDto descriptionsReadDto = new DescriptionsReadDto(3L, "3", user);
 
-    private final CurrencyOperations currencyOperations = new CurrencyOperations(1, "1");
-    private final Categories categories = new Categories(2L, "2");
-    private final Descriptions descriptions = new Descriptions(3L, "3");
-    private final User user = new User(4L, "4", "2", "1@2.com",
-             LocalDate.parse("1999-12-12"), "123", Role.ADMIN, Gender.FEMALE);
+    private final CurrencyOperations currencyOperations = new CurrencyOperations(1, "1", user);
+    private final Categories categories = new Categories(2L, "2", user);
+    private final Descriptions descriptions = new Descriptions(3L, "3", user);
 
-    private final UserReadDto userReadDto = new UserReadDto(4L, "4", "2", "2@2.com",
+    private final UserReadDto userReadDto = new UserReadDto(4L, "4", "2", "admin@admin.com",
             LocalDate.parse("1999-12-12"), Role.ADMIN, Gender.FEMALE);
 
     private final ExpensesSessionFilter expensesSessionFilter = new ExpensesSessionFilter(

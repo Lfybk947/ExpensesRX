@@ -5,6 +5,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
 import ru.lfybkCompany.database.entity.Gender;
 import ru.lfybkCompany.database.entity.Role;
@@ -31,6 +32,8 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
     @Mock
+    private PasswordEncoder passwordEncoder;
+    @Mock
     private UserRepository userRepository;
     @Mock
     private UserReadMapper userReadMapper;
@@ -44,44 +47,44 @@ public class UserServiceTest {
     @InjectMocks
     private UserService userService;
 
-    UserFilter userFilter = new UserFilter("Danil",
-            "Tsaregorodtsev",
+    UserFilter userFilter = new UserFilter("admin",
+            "admin",
             LocalDate.parse("2001-07-21"),
-            "czare2015@yandex.ru",
+            "admin@admin.com",
             Role.ADMIN,
             Gender.MALE);
-    List<User> users = List.of(new User(1L, "Danil",
-            "Tsaregorodtsev",
-            "czare2015@yandex.ru",
+    List<User> users = List.of(new User(1L, "admin",
+            "admin",
+            "admin@admin.com",
             LocalDate.parse("2001-07-21"),
-            "{noop}123",
+            "11",
             Role.ADMIN,
             Gender.MALE));
-    UserReadDto userReadDto = new UserReadDto(1L, "Danil",
-            "Tsaregorodtsev",
-            "czare2015@yandex.ru",
+    UserReadDto userReadDto = new UserReadDto(1L, "admin",
+            "admin",
+            "admin@admin.com",
             LocalDate.parse("2001-07-21"),
             Role.ADMIN,
             Gender.MALE);
     UserCreateEditDto userCreateEditDto = new UserCreateEditDto(
-            "Danil",
-            "Tsaregorodtsev",
-            "czare2015@yandex.ru",
+            "admin",
+            "admin",
+            "admin@admin.com",
             LocalDate.parse("2001-07-21"),
-            "{noop}123",
+            "11",
             Role.ADMIN,
             Gender.MALE);
-    User user = new User(1L, "Danil",
-            "Tsaregorodtsev",
-            "czare2015@yandex.ru",
+    User user = new User(1L, "admin",
+            "admin",
+            "admin@admin.com",
             LocalDate.parse("2001-07-21"),
-            "{noop}123",
+            "11",
             Role.ADMIN,
             Gender.MALE);
     UserUpdateEditDto userUpdateEditDto = new UserUpdateEditDto(
-            "Danil",
-            "Tsaregorodtsev",
-            "czare2015@yandex.ru",
+            "admin",
+            "admin",
+            "admin@admin.com",
             LocalDate.parse("2001-07-21"),
             Role.ADMIN,
             Gender.MALE);
@@ -97,14 +100,13 @@ public class UserServiceTest {
     }
 
     @Test
-    @WithMockUser(username = "czare2015@yandex.ru", password = "123", authorities = {"ADMIN", "USER"})//can be most without authorization
     public void test_findAllByFilter_validData() {
         when(userRepository.findAllByFilter(userFilter)).thenReturn(users);
         when(userReadMapper.map(users.get(0))).thenReturn(userReadDto);
 
         var userss = userService.findAllByFilter(userFilter);
         assertThat(userss).hasSize(1);
-        assertEquals("czare2015@yandex.ru", userss.get(0).username());
+        assertEquals("admin@admin.com", userss.get(0).username());
     }
 
     @Test
@@ -119,6 +121,7 @@ public class UserServiceTest {
 
     @Test
     public void test_create_validData() {
+        when(passwordEncoder.encode(userCreateEditDto.password())).thenReturn(userCreateEditDto.password());
         when(userCreateEditMapper.map(userCreateEditDto)).thenReturn(user);
         when(userRepository.save(user)).thenReturn(user);
         when(userReadMapper.map(user)).thenReturn(userReadDto);
@@ -160,9 +163,9 @@ public class UserServiceTest {
 /*
     @Test
     public void loadUserByUsername() {
-        User user = new User(1L, "Danil",
-                "Tsaregorodtsev",
-                "czare2015@yandex.ru",
+        User user = new User(1L, "admin",
+                "admin",
+                "admin@admin.com",
                 null,
                 null,
                 Role.ADMIN,
@@ -175,11 +178,11 @@ public class UserServiceTest {
     }
 
     @Test
-    @WithMockUser(username = "czare2015@yandex.ru", password = "123", authorities = {"ADMIN", "USER"})
+    @WithMockUser(username = "admin@admin.com", password = "123", authorities = {"ADMIN", "USER"})
     public void getAuthorizationUser() {
-        User users = new User(1L, "Danil",
-                "Tsaregorodtsev",
-                "czare2015@yandex.ru",
+        User users = new User(1L, "admin",
+                "admin",
+                "admin@admin.com",
                 null,
                 null,
                 Role.ADMIN,
